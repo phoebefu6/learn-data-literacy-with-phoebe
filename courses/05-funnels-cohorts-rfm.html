@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 5 · Funnels, cohorts and RFM - learn data literacy with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=4">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-data-literacy-with-phoebe</a> / Session 5 of 8</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Data Literacy with Phoebe · Session 5 of 8</div>
+    <h1>Funnels, cohorts and RFM: <span class="accent">where the customers leak out</span></h1>
+    <p class="sub">Session 4 gave you the tree; this session gives you the three x-ray machines behind its branches. Funnels show where customers leak, cohorts show whether they come back, and RFM sorts them into segments that each deserve a different move. All three run on data you already have.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Core</span>
+      <span class="chip audience">Execs &amp; business leaders</span>
+      <span class="chip audience">Builds on Session 4</span>
+      <span class="chip time">45 min live + self-study</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:3">3-18 · Concepts</span>
+      <span class="a3" style="flex:5">18-40 · Apply-along</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Three x-rays for one customer journey</h2>
+    </div>
+    <p class="lede">Every customer walks a path: they discover you, try you, pay you, and either return or quietly vanish. Funnels x-ray the path forward (where do they leak?), cohorts x-ray the path back (do they return?), and RFM x-rays the crowd (who deserves which message?). Master these three and you can interrogate almost any growth claim anyone puts in front of you - which is precisely the job of a data-literate leader.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill amber">★ Apply-along - interactive, everyone plays</span>
+      <span class="pill inkpill">Real cases: Baymard, Facebook, Sephora &amp; more</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Three habits: the leak-first principle (fix the weakest funnel stage, not the loudest one), the cohort lens that catches the churn a growing average hides, and an RFM segmentation you could genuinely run in a spreadsheet by Friday - plus the metric pack for your industry so you know which numbers your peers are watching.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: FUNNELS ============ -->
+  <section class="section" id="funnels">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · the path forward</span>
+      <h2>Funnel analytics <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Every business is a funnel: many enter, few pay. The magic number is not the count at any stage - it is the conversion rate between stages, because that is where the money silently leaks out.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five stage funnel from visit to purchase with conversion rates between stages, weakest stage flagged, and AARRR pirate metrics rail on the right">
+        <style>
+          .fn5T { font: 700 13px Inter, sans-serif; fill: #FFFFFF; }
+          .fn5H { font: 700 13px Inter, sans-serif; fill: #16232E; }
+          .fn5X { font: 400 12px Inter, sans-serif; fill: #5E6E7A; }
+          .fn5C { font: 600 12px Inter, sans-serif; fill: #5E6E7A; }
+          .fn5W { font: 700 12px Inter, sans-serif; fill: #B42318; }
+          .fn5N { font: 600 12px Inter, sans-serif; fill: #BE123C; }
+          .fn5A { stroke: #C3CFD8; stroke-width: 2.5; fill: none; marker-end: url(#fn5Ah); }
+        </style>
+        <defs>
+          <marker id="fn5Ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#C3CFD8" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="40" y="28" width="560" height="38" rx="8" fill="#0C3B5C"/>
+        <text class="fn5T" x="54" y="52">Visit · 100,000</text>
+        <line class="fn5A" x1="86" y1="70" x2="86" y2="90"/>
+        <text class="fn5C" x="102" y="86">45% continue</text>
+        <rect x="40" y="94" width="252" height="38" rx="8" fill="#14699C"/>
+        <text class="fn5T" x="54" y="118">Product view · 45,000</text>
+        <line class="fn5A" x1="86" y1="136" x2="86" y2="156"/>
+        <text class="fn5W" x="102" y="152">⚠ 30% - the weakest stage</text>
+        <rect x="40" y="160" width="110" height="38" rx="8" fill="#2E9BD6" stroke="#B42318" stroke-width="2.5"/>
+        <text class="fn5H" x="162" y="184">Add to cart · 13,500</text>
+        <line class="fn5A" x1="86" y1="202" x2="86" y2="222"/>
+        <text class="fn5C" x="102" y="218">40% continue</text>
+        <rect x="40" y="226" width="70" height="38" rx="8" fill="#2E9BD6"/>
+        <text class="fn5H" x="122" y="250">Checkout · 5,400</text>
+        <line class="fn5A" x1="86" y1="268" x2="86" y2="288"/>
+        <text class="fn5C" x="102" y="284">65% complete</text>
+        <rect x="40" y="292" width="50" height="38" rx="8" fill="#BE123C"/>
+        <text class="fn5H" x="102" y="316">Purchase · 3,510 · the money</text>
+        <rect x="660" y="28" width="195" height="240" rx="11" fill="#E3F2FC"/>
+        <text class="fn5H" x="676" y="54">AARRR (McClure)</text>
+        <text class="fn5X" x="676" y="80">Acquisition - they arrive</text>
+        <text class="fn5X" x="676" y="104">Activation - first value</text>
+        <text class="fn5X" x="676" y="128">Retention - they return</text>
+        <text class="fn5X" x="676" y="152">Referral - they invite</text>
+        <text class="fn5X" x="676" y="176">Revenue - they pay</text>
+        <text class="fn5X" x="676" y="206">the startup funnel:</text>
+        <text class="fn5X" x="676" y="224">five stages, five</text>
+        <text class="fn5X" x="676" y="242">questions to ask</text>
+        <text class="fn5N" x="330" y="316">Leak-first principle: fix the weakest stage, not the loudest one.</text>
+        <text class="fn5X" x="330" y="336">96.5% of visitors never buy - and that is a normal e-commerce funnel.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - five stages, four leaks, one red flag worth all your attention</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>The leak-first principle<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Three rules of funnel reading:</p>
+        <ul>
+          <li><strong>Conversion between stages beats counts at stages.</strong> "13,500 added to cart" is information; "only 30% of viewers add to cart, versus 45% and 65% elsewhere" is the insight.</li>
+          <li><strong>Fix the weakest stage, not the loudest one.</strong> The loudest stage is usually the top (marketing wants more traffic) or the bottom (finance stares at purchases). The weakest stage is wherever conversion sags - and fixes there multiply through everything downstream.</li>
+          <li><strong>Leaks compound.</strong> The funnel is a chain of multiplications, which you already know how to read: it is a KPI tree lying on its side.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Baymard Institute's running meta-study:</strong> average documented cart abandonment is roughly 70% - seven of ten loaded carts never check out. A top killer is disclosing shipping costs late: the price grows at the last step and trust snaps. The fix (show total cost early) is a product tweak, not an ad budget - a classic weakest-stage win that no amount of top-of-funnel spend could buy.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>AARRR: pirate metrics, seriously<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Dave McClure's AARRR framework (yes, named for the pirate noise) is the funnel generalized for any product: <strong>Acquisition</strong> (they find you) → <strong>Activation</strong> (they experience first value) → <strong>Retention</strong> (they come back) → <strong>Referral</strong> (they bring friends) → <strong>Revenue</strong> (they pay). Its power is diagnostic: a struggling business is usually failing at exactly one letter, and each letter has a different fix. Dropbox's famous referral program (free space for both inviter and invitee) was an R-for-Referral play chosen only after activation and retention already worked - referral pours fuel, and fuel on a leaky funnel just burns faster.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: COHORTS ============ -->
+  <section class="section" id="cohorts">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · the path back</span>
+      <h2>Cohorts and retention <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">A cohort is simply a group that started together - the January signups, the Black Friday buyers. Track each cohort separately over time and you get the single most honest chart in analytics: the retention curve.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two retention curves over twelve months: one flattening around forty percent showing habit, one decaying toward zero showing a leaky bucket, with a cohort table hint on the right">
+        <style>
+          .rc5H { font: 700 13px Inter, sans-serif; fill: #16232E; }
+          .rc5X { font: 400 12px Inter, sans-serif; fill: #5E6E7A; }
+          .rc5G { font: 700 12.5px Inter, sans-serif; fill: #BE123C; }
+          .rc5B { font: 700 12.5px Inter, sans-serif; fill: #B42318; }
+          .rc5Ax { stroke: #C3CFD8; stroke-width: 2; }
+        </style>
+        <line class="rc5Ax" x1="60" y1="40" x2="60" y2="262"/>
+        <line class="rc5Ax" x1="60" y1="262" x2="620" y2="262"/>
+        <text class="rc5X" x="40" y="36">100%</text>
+        <text class="rc5X" x="40" y="170">50%</text>
+        <text class="rc5X" x="48" y="278">0</text>
+        <text class="rc5X" x="250" y="292">months since signup →</text>
+        <text class="rc5X" x="600" y="278">12</text>
+        <path d="M60,44 C130,130 190,166 260,176 C360,188 480,192 618,194" fill="none" stroke="#BE123C" stroke-width="3.5"/>
+        <path d="M60,44 C130,180 220,236 320,252 C420,260 520,261 618,261" fill="none" stroke="#B42318" stroke-width="3.5"/>
+        <text class="rc5G" x="340" y="168">flattens = habit formed</text>
+        <text class="rc5G" x="340" y="186">product-market fit lives here</text>
+        <text class="rc5B" x="380" y="240">dives to zero = leaky bucket</text>
+        <rect x="650" y="46" width="205" height="176" rx="11" fill="#E3F2FC"/>
+        <text class="rc5H" x="666" y="72">The cohort table</text>
+        <rect x="666" y="86" width="40" height="18" fill="#0C3B5C"/><rect x="710" y="86" width="40" height="18" fill="#14699C"/><rect x="754" y="86" width="40" height="18" fill="#2E9BD6"/><rect x="798" y="86" width="40" height="18" fill="#A5D8F3"/>
+        <rect x="666" y="108" width="40" height="18" fill="#0C3B5C"/><rect x="710" y="108" width="40" height="18" fill="#14699C"/><rect x="754" y="108" width="40" height="18" fill="#A5D8F3"/>
+        <rect x="666" y="130" width="40" height="18" fill="#0C3B5C"/><rect x="710" y="130" width="40" height="18" fill="#2E9BD6"/>
+        <rect x="666" y="152" width="40" height="18" fill="#0C3B5C"/>
+        <text class="rc5X" x="666" y="192">each row = one start month</text>
+        <text class="rc5X" x="666" y="210">read fading along the row</text>
+        <text class="rc5X" x="60" y="312">One curve per cohort. If newer cohorts flatten higher than older ones, the product is genuinely improving.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the two fates of every cohort: habit, or goodbye</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Why cohorts beat averages<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Fast growth is a magician's cape: it hides churn. When signups grow 20% a month, the average user is always young, engaged and shiny - even while every cohort quietly bleeds out behind the curtain. Total active users climbs; the business is dying. Only a cohort view separates the two stories, because it refuses to let new users answer for old ones.</p>
+        <ul>
+          <li><strong>Read the shape, not the level:</strong> a curve that flattens (even at 25%) means a durable habit; a curve that slides to zero means a leaky bucket, whatever this month's topline says.</li>
+          <li><strong>Compare cohorts to each other:</strong> newer cohorts flattening higher = the product is improving. Flattening lower = growth is buying worse customers.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Facebook's early growth team</strong> mined cohort data for the difference between users who stayed and users who vanished, and landed on a famous rule: get a new user to <strong>7 friends in 10 days</strong> and they stick. That single activation insight reorganized the entire onboarding flow around friend-finding - not profile completion, not feature tours. One cohort analysis became the company's growth strategy.</p>
+        </div>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          Whenever growth is fast and someone shows you an average or a topline, say: "show me this by cohort." Five words. It is the highest ratio of insight to syllables in this entire course.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: RFM ============ -->
+  <section class="section" id="rfm">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · the crowd, sorted</span>
+      <h2>RFM: segmentation you can run in a spreadsheet <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Recency, Frequency, Monetary - Arthur Hughes built it in the direct-mail era, and it is still the workhorse of e-commerce CRM because it needs exactly three columns you already have: last purchase date, purchase count, total spend.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Score, segment, act - the whole method<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Score every customer 1-5 on each letter: <strong>R</strong>ecency (how recently they bought - 5 is most recent), <strong>F</strong>requency (how often), <strong>M</strong>onetary (how much). Segments fall out of the combinations:</p>
+        <table class="clean">
+          <thead><tr><th>Segment</th><th>Profile (R / F / M)</th><th>The move</th></tr></thead>
+          <tbody>
+            <tr><td>Champions</td><td>5 / 5 / 5 - recent, frequent, big</td><td>reward, early access, ask for reviews - never discount</td></tr>
+            <tr><td>Loyal</td><td>4 / 4 / 3 - steady regulars</td><td>upsell gently, build the habit loop</td></tr>
+            <tr><td>New</td><td>5 / 1 / low - just arrived</td><td>onboard toward the second purchase fast</td></tr>
+            <tr><td>At-risk champions</td><td>2 / 5 / 5 - valuable but slipping away</td><td>win-back NOW, personal touch, highest priority</td></tr>
+            <tr><td>Hibernating</td><td>1 / 1 / low - long gone, barely knew you</td><td>cheap reactivation at most, or let go gracefully</td></tr>
+          </tbody>
+        </table>
+        <p><strong>The whole point:</strong> stop sending the same email to everyone. A discount that delights a hibernating customer insults a champion (who would have paid full price) - one blast, two opposite effects, both invisible in the average open rate.</p>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Sephora's Beauty Insider and Starbucks Rewards</strong> are RFM-style machines at loyalty-program scale: tiers keyed to spend and visit frequency, with different perks, nudges and win-back offers per tier. And when win-back budgets are tight, the play is always the same: target the <em>at-risk champions</em> first - they were recently valuable, so recency says they are the most likely to answer and the most expensive to lose.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Your industry's metric pack<span class="mini">3 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Every industry has a standard dashboard. Knowing yours - and your investors' - is table stakes:</p>
+        <table class="clean">
+          <thead><tr><th>Industry</th><th>The pack</th><th>The one to watch</th></tr></thead>
+          <tbody>
+            <tr><td>Internet / consumer apps</td><td>DAU, MAU, DAU/MAU stickiness, session length</td><td>DAU/MAU - above ~20% means a habit, not an app</td></tr>
+            <tr><td>SaaS</td><td>MRR/ARR, NRR, churn rate, CAC, LTV, CAC payback months, magic number</td><td>NRR - above 100% means existing customers grow even with zero sales</td></tr>
+            <tr><td>E-commerce</td><td>GMV, AOV, conversion rate, repeat purchase rate, cart abandonment</td><td>repeat purchase rate - the difference between a brand and a transaction</td></tr>
+          </tbody>
+        </table>
+        <p>Notice the family resemblance: every pack is a funnel metric + a retention metric + a money metric. Same three x-rays, industry costume.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 1 of 3</span>
+      <h2>Find the leak worth fixing <span class="tag demo">★ 9 min · everyone simulates</span></h2>
+    </div>
+    <p class="lede">The Part 1 funnel, live. Two executives propose two fixes; you have the simulator they did not.</p>
+    <div class="widget" data-widget="funnel" data-config='{"title": "★ Funnel simulator - find the leak worth fixing", "visitors": 100000, "aov": 80, "stages": [{"name": "Visit"}, {"name": "Product view", "cv": 45}, {"name": "Add to cart", "cv": 30}, {"name": "Checkout", "cv": 40}, {"name": "Purchase", "cv": 65}]}'></div>
+    <div class="steps">
+      <div class="step"><p>Read the baseline: 100,000 visitors trickle down to purchases at $80 average order value. Say the end-to-end conversion out loud - it is smaller than most people guess.</p></div>
+      <div class="step"><p>Find the flagged weakest stage. (It is the add-to-cart step at 30% - the Baymard story from Part 1 predicts exactly this kind of sag.)</p></div>
+      <div class="step"><p><strong>The boardroom duel:</strong> the CMO proposes doubling ad spend - set visitors to 200,000 and note the revenue. Reset. The product lead proposes fixing add-to-cart from 30 to 40 - try that and note the revenue. Now compare the two outcomes per dollar of effort: media budgets rent traffic monthly; a checkout fix is built once.</p></div>
+      <div class="step"><p>Free play: find the smallest single change that adds $1M of annual revenue. Compare answers across the room - there are several paths, and they disagree in interesting ways.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The debrief</strong>
+      Leaks compound, so upstream fixes multiply downstream: every visitor saved at add-to-cart still has to survive checkout, and they do at the same rates - which is why a 10-point fix mid-funnel can rival doubling the traffic bill. Fix the funnel, then buy the traffic. In that order.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 2 of 3</span>
+      <h2>Score three customers yourself <span class="tag demo">★ 8 min · everyone scores</span></h2>
+    </div>
+    <p class="lede">RFM only sticks once you have scored someone. Three imaginary customers, three verdicts, three different emails.</p>
+    <div class="widget" data-widget="rfm" data-config='{}'></div>
+    <div class="steps">
+      <div class="step"><p>Customer 1 - <strong>the friend of the brand:</strong> bought last week, buys monthly, spends big. Score them. (Expect a Champion - note the recommended move is a reward, not a discount.)</p></div>
+      <div class="step"><p>Customer 2 - <strong>the big spender who vanished:</strong> two large purchases, but the last one was a year ago. Score them and read the segment carefully - this is the at-risk profile the win-back budget exists for.</p></div>
+      <div class="step"><p>Customer 3 - <strong>the newcomer:</strong> one small purchase last week. Score them. The move is onboarding toward purchase two, not loyalty perks they have not earned.</p></div>
+      <div class="step"><p>Discuss: which segment does your current marketing actually talk to? In most companies the honest answer is "everyone gets the same blast" - which means champions are subsidizing the discounts and hibernators are ignoring them.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 3 of 3</span>
+      <h2>Draw YOUR funnel <span class="tag demo">★ 5 min · everyone draws</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><p>Sketch your own business as a funnel: 4-6 stages from first touch to money. B2B works too - lead → qualified → demo → proposal → closed.</p></div>
+      <div class="step"><p>Guess the conversion rate at each stage. Write the guesses down - next week, ask your analyst for the real numbers and enjoy the humility.</p></div>
+      <div class="step"><p>Mark the stage nobody owns. Almost every room finds one - typically the handoff between two departments (marketing to sales, or purchase to second purchase).</p></div>
+      <div class="step"><p>Circle your best guess at the weakest stage. That circle plus Session 4's tree tells you where next quarter's effort belongs.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">After the session</span>
+      <h2>This week <span class="tag exercise">◐ 30 min total</span></h2>
+    </div>
+    <ul>
+      <li><strong>Get the real funnel numbers</strong> for the stages you sketched in Apply-along 3 and compare against your guesses. Bring the biggest surprise to next session.</li>
+      <li><strong>Ask your analyst for one cohort chart:</strong> monthly signup (or first-purchase) cohorts, with retention read along each row. Check the shape first: flattening or diving?</li>
+      <li><strong>Run baby RFM in a spreadsheet:</strong> your top 20 customers, three columns (last purchase, count, total spend), score each 1-5, and find your at-risk champions. It genuinely takes 15 minutes.</li>
+      <li><strong>Optional deep end:</strong> Croll &amp; Yoskovitz, <em>Lean Analytics</em> on funnel and retention metrics, plus Dave McClure's original "Startup Metrics for Pirates" deck - still funny, still right.</li>
+    </ul>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Your funnel converts: visit → view 50%, view → cart 30%, cart → checkout 45%, checkout → purchase 90%. Where do you put the team first?</p>
+      <button class="qopt" type="button">A · Checkout to purchase - it is closest to the money</button>
+      <button class="qopt" type="button">B · View to cart - it is the weakest stage, and a fix there multiplies through every stage downstream</button>
+      <button class="qopt" type="button">C · Buy more traffic - more visits lifts every stage proportionally</button>
+      <p class="qwhy">The leak-first principle: 90% is already excellent, and traffic poured into a leaky mid-funnel mostly leaks. Lifting view-to-cart from 30% to 36% raises purchases 20% with zero extra media spend - the compounding works for you.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · Active users grew 20% this quarter. The CMO says retention is clearly fine. What does the data-literate leader say?</p>
+      <button class="qopt" type="button">A · Not necessarily - averages blend new and old users, and fast acquisition can mask old cohorts bleeding out. Show it by cohort.</button>
+      <button class="qopt" type="button">B · Agreed - users cannot grow while retention is falling</button>
+      <button class="qopt" type="button">C · It depends on whether revenue also grew 20%</button>
+      <p class="qwhy">Growth is a magician's cape. Total actives can climb for quarters while every cohort dives to zero - the leaky bucket refilled faster. Only cohort curves separate a habit from a treadmill.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">3 · RFM stands for - and why does R lead the win-back list?</p>
+      <button class="qopt" type="button">A · Revenue, Frequency, Margin - revenue matters most, so it goes first</button>
+      <button class="qopt" type="button">B · Reach, Frequency, Monetary - it comes from advertising media planning</button>
+      <button class="qopt" type="button">C · Recency, Frequency, Monetary - recency is the strongest single predictor of who will respond, so recently-valuable slipping customers top the win-back list</button>
+      <p class="qwhy">Hughes' direct-mail finding still holds: how recently someone bought predicts response better than how much or how often. That is why the at-risk champion (high F, high M, fading R) is the most urgent - and most winnable - save in the file.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Concepts covered &amp; their origins</h2>
+    </div>
+    <p class="lede">This session teaches the working 80% of each idea and credits the canon - the books and decks stay the deep end for anyone who wants more.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Funnel analytics + leak-first principle</span><span class="note">stage conversion, weakest-stage fixes, compounding - Part 1 + Apply-along 1</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">AARRR pirate metrics (Dave McClure)</span><span class="note">acquisition → activation → retention → referral → revenue - Part 1 card + SVG rail</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Cohort analysis + retention curves</span><span class="note">flatten vs dive, why cohorts beat averages, Facebook's 7-in-10 - Part 2</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">RFM segmentation (Arthur Hughes)</span><span class="note">1-5 scoring, segments, action per segment - Part 3 + Apply-along 2</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Industry metric packs</span><span class="note">Internet / SaaS / e-commerce dashboards - self-study table in Part 3</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">NRR mechanics in depth</span><span class="note">named and defined here; the expansion/contraction math stays a finance-course topic</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Statistical testing of funnel changes</span><span class="note">before trusting a funnel "win", apply Session 3's A/B intuition - pointer only</span></div>
+    </div>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 5 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Leak-first principle</b><span>Fix the weakest funnel stage, not the loudest one. Upstream fixes multiply downstream; traffic on a leaky funnel just leaks faster.</span></div>
+      <div class="cheat-item"><b>AARRR</b><span>Acquisition → Activation → Retention → Referral → Revenue. A struggling product usually fails at exactly one letter.</span></div>
+      <div class="cheat-item"><b>Cohorts beat averages</b><span>Fast growth hides churn - new users mask old ones leaving. Five magic words: "show me this by cohort."</span></div>
+      <div class="cheat-item"><b>Retention curve shapes</b><span>Flattens = habit, product-market fit. Dives to zero = leaky bucket, whatever the topline says. Newer cohorts flattening higher = real improvement.</span></div>
+      <div class="cheat-item"><b>RFM</b><span>Recency · Frequency · Monetary, each scored 1-5. Champions get rewards, at-risk champions get the win-back budget, hibernators get let go. Never one blast for all.</span></div>
+      <div class="cheat-item"><b>Your industry pack</b><span>Internet: DAU/MAU stickiness. SaaS: NRR above 100%. E-com: repeat purchase rate. Every pack = funnel + retention + money.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 5 of 8 · learn-data-literacy-with-phoebe · by Phoebe Fu</span>
+    <span><a href="04-metrics-and-kpi-trees.html">← Prev: Metrics and KPI trees</a> &nbsp;·&nbsp; <a href="06-ml-basics-predict.html">Next: ML basics I: predict →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=4"></script>
+<script src="../assets/widgets.js?v=4"></script>
+</body>
+</html>

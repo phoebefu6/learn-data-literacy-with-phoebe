@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 8 · From dashboard to decision - learn data literacy with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=4">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-data-literacy-with-phoebe</a> / Session 8 of 8</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Data Literacy with Phoebe · Session 8 of 8</div>
+    <h1>From dashboard to decision: <span class="accent">the capstone</span></h1>
+    <p class="sub">One worked mini-case, run end to end with everything you now own: a KPI tree to diagnose, a funnel and cohorts to drill, RFM to target, a forecast to price inaction, and a one-page memo to make it all happen. This is the session where eight weeks of tools become one repeatable management habit.</p>
+    <div class="chip-row">
+      <span class="chip level">🔴 Capstone</span>
+      <span class="chip audience">Execs &amp; business leaders</span>
+      <span class="chip audience">Uses everything from Sessions 1-7</span>
+      <span class="chip time">45 min live + self-study</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:3">3-19 · Concepts</span>
+      <span class="a3" style="flex:5">19-41 · Apply-along</span>
+      <span class="a4" style="flex:1">41-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Meet Alpine Roast</h2>
+    </div>
+    <p class="lede">"Alpine Roast" is a subscription-plus-shop online coffee brand, and it is having a very bad quarter. Monthly income has collapsed from $23,000 to $4,250 over two quarters - an 82% drop - while marketing spend held perfectly steady. The founder's dashboard shows one red number and zero explanations. Your job today: run the full course toolkit on this one case, from panic to a signed one-page action memo, in 45 minutes. Every move you make is a move you learned in Sessions 1-7.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill amber">★ Apply-along - interactive, everyone plays</span>
+      <span class="pill inkpill">Real cases: Amazon WBR, Domino's</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      The full loop as a habit: diagnose with the KPI tree, drill with the right tool per branch, write the answer-first one-page memo (1 answer + 3 findings + 3 actions + 1 measurement line), and run a lightweight weekly metric review so the next collapse never gets two quarters of runway. Plus the honest map of what this course left out - and where the AI literacy course picks up.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: THE DIAGNOSIS DRILL ============ -->
+  <section class="section" id="diagnosis">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · the diagnosis drill</span>
+      <h2>Walk the tree, not the org chart <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">When income drops 82%, the untrained reflex is to summon marketing. The trained reflex is Session 4's KPI tree: income = revenue - cost; revenue = buyers × basket size × item value; buyers = new + returning + resurrected - churned. Fill in Alpine Roast's numbers and the panic resolves into exactly two moved branches.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Alpine Roast KPI tree: income 4,250 splits into revenue 56,250 and cost 52,000; revenue splits into buyers 750, basket 3, item value 25; buyers splits into new 350 and churned 400 flagged red, returning 700 and resurrected 100 healthy">
+        <style>
+          .atT { font: 700 13.5px Inter, sans-serif; fill: #FFFFFF; }
+          .atS { font: 400 11.5px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .atH { font: 700 13px Inter, sans-serif; fill: #16232E; }
+          .atX { font: 400 11.5px Inter, sans-serif; fill: #5E6E7A; }
+          .atN { font: 600 12px Inter, sans-serif; fill: #BE123C; }
+          .atW { font: 600 12px Inter, sans-serif; fill: #B42318; }
+          .atA { stroke: #C3CFD8; stroke-width: 2.5; fill: none; marker-end: url(#atAh); }
+        </style>
+        <defs>
+          <marker id="atAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#C3CFD8" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="330" y="20" width="220" height="62" rx="12" fill="#0C3B5C"/>
+        <text class="atT" x="346" y="44">Income $4,250</text>
+        <text class="atS" x="346" y="62">was $23,000 · down 82%</text>
+        <line class="atA" x1="410" y1="82" x2="245" y2="118"/>
+        <line class="atA" x1="470" y1="82" x2="635" y2="118"/>
+        <rect x="120" y="122" width="220" height="58" rx="11" fill="#14699C"/>
+        <text class="atT" x="136" y="146">Revenue $56,250</text>
+        <text class="atS" x="136" y="164">was $75,000 · the mover</text>
+        <rect x="540" y="122" width="220" height="58" rx="11" fill="#2E9BD6"/>
+        <text class="atT" x="556" y="146">Cost $52,000</text>
+        <text class="atS" x="556" y="164">flat - not the story</text>
+        <line class="atA" x1="170" y1="180" x2="120" y2="216"/>
+        <line class="atA" x1="230" y1="180" x2="330" y2="216"/>
+        <line class="atA" x1="290" y1="180" x2="545" y2="216"/>
+        <rect x="40" y="220" width="180" height="56" rx="11" fill="#14699C"/>
+        <text class="atT" x="54" y="243">Buyers 750</text>
+        <text class="atS" x="54" y="261">was 1,000 · drill here</text>
+        <rect x="255" y="220" width="180" height="56" rx="11" fill="#E3F2FC"/>
+        <text class="atH" x="269" y="243">Basket 3 items</text>
+        <text class="atX" x="269" y="261">unchanged</text>
+        <rect x="470" y="220" width="180" height="56" rx="11" fill="#E3F2FC"/>
+        <text class="atH" x="484" y="243">Item value $25</text>
+        <text class="atX" x="484" y="261">unchanged</text>
+        <line class="atA" x1="80" y1="276" x2="70" y2="312"/>
+        <line class="atA" x1="115" y1="276" x2="255" y2="312"/>
+        <line class="atA" x1="150" y1="276" x2="445" y2="312"/>
+        <line class="atA" x1="185" y1="276" x2="640" y2="312"/>
+        <rect x="30" y="316" width="185" height="56" rx="11" fill="#B42318"/>
+        <text class="atT" x="44" y="339">New 350 ⚑</text>
+        <text class="atS" x="44" y="357">was 400 · owner: growth</text>
+        <rect x="235" y="316" width="185" height="56" rx="11" fill="#E3F2FC"/>
+        <text class="atH" x="249" y="339">Returning 700</text>
+        <text class="atX" x="249" y="357">healthy</text>
+        <rect x="440" y="316" width="185" height="56" rx="11" fill="#E3F2FC"/>
+        <text class="atH" x="454" y="339">Resurrected 100</text>
+        <text class="atX" x="454" y="357">healthy</text>
+        <rect x="645" y="316" width="200" height="56" rx="11" fill="#B42318"/>
+        <text class="atT" x="659" y="339">Churned 400 ⚑</text>
+        <text class="atS" x="659" y="357">was 200 · owner: retention</text>
+        <text class="atW" x="540" y="206">Two quiet branch moves = 82% income collapse.</text>
+        <text class="atX" x="540" y="224">Two branches → two named problems → two owners.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the Alpine Roast KPI tree, with the two red branches that ate $18,750 of monthly income</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>From one red number to two named problems<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Walk it top-down, exactly like Session 4 taught. Last healthy month: 1,000 buyers (400 new + 700 returning + 100 resurrected - 200 churned) × 3 items × $25 = $75,000 revenue, minus $52,000 cost = $23,000 income. Today: churned doubled to 400 and new buyers slipped to 350, so buyers = 350 + 700 + 100 - 400 = 750, revenue = 750 × 3 × $25 = $56,250, income = $4,250.</p>
+        <ul>
+          <li><strong>Cost is flat.</strong> Cross that whole side of the tree off in ten seconds - no cost-cutting panic needed yet.</li>
+          <li><strong>Basket size and item value are unchanged.</strong> The product and pricing are fine. Revenue fell purely because buyers fell.</li>
+          <li><strong>Two branches moved:</strong> churned doubled (200 → 400) and new buyers slipped (400 → 350). Different problems, different owners - retention owns the first, growth owns the second.</li>
+          <li><strong>The leverage lesson:</strong> income sits at the top of a multiplication, so a 25% buyer drop became an 82% income drop. Small branch moves compound violently at the root - which is why the tree, not the dashboard's one red number, is where diagnosis starts.</li>
+        </ul>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          "Income is down" is a symptom. "Churn doubled and new buyers slipped 12%" is a diagnosis. Never leave the tree until the symptom has become branch-level problems with names and owners - it takes five minutes and saves five weeks of the wrong people investigating the wrong thing.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Why the tree beats the org chart every time<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>When a topline number breaks, most companies route the question by org chart: revenue is down, so marketing presents next Monday. But the org chart tells you who owns activities, not which arithmetic branch moved. Alpine Roast's marketing spend never changed - summoning the CMO would have produced a defensive deck and zero diagnosis.</p>
+        <table class="clean">
+          <thead><tr><th>Reflex</th><th>What happens</th><th>Time to truth</th></tr></thead>
+          <tbody>
+            <tr><td>Org chart first</td><td>each team defends its own metrics</td><td>weeks, sometimes never</td></tr>
+            <tr><td>Tree first</td><td>arithmetic isolates the moved branches, then you invite the right owners</td><td>one meeting</td></tr>
+          </tbody>
+        </table>
+        <p>The tree is also a fairness device: nobody gets blamed for a branch that did not move. Returning buyers held at 700 - somebody is doing their job well, and the tree says so out loud.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: DRILL WHERE IT HURTS ============ -->
+  <section class="section" id="drill">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · drill where it hurts</span>
+      <h2>One tool per red branch <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">The tree names the problems; Sessions 5-7 gave you a drill for each. Churn questions go to cohorts. Acquisition questions go to the funnel. "Who do we save first?" goes to RFM. "What if we do nothing?" goes to the forecast. Four analyses, four one-line findings - this is the war room wall.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="War room wall: the KPI tree in the center, four analyses around it - cohort view, funnel view, RFM scorer, forecast - each with its one-line finding">
+        <style>
+          .wrT { font: 700 13.5px Inter, sans-serif; fill: #FFFFFF; }
+          .wrS { font: 400 11.5px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .wrH { font: 700 13px Inter, sans-serif; fill: #16232E; }
+          .wrX { font: 400 11.5px Inter, sans-serif; fill: #5E6E7A; }
+          .wrN { font: 600 12px Inter, sans-serif; fill: #BE123C; }
+          .wrA { stroke: #C3CFD8; stroke-width: 2.5; fill: none; marker-end: url(#wrAh); }
+        </style>
+        <defs>
+          <marker id="wrAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#C3CFD8" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="330" y="140" width="220" height="80" rx="12" fill="#0C3B5C"/>
+        <text class="wrT" x="346" y="168">The KPI tree</text>
+        <text class="wrS" x="346" y="186">churned 400 ⚑ new 350 ⚑</text>
+        <text class="wrS" x="346" y="203">two branches, two drills</text>
+        <line class="wrA" x1="345" y1="140" x2="255" y2="96"/>
+        <line class="wrA" x1="535" y1="140" x2="625" y2="96"/>
+        <line class="wrA" x1="345" y1="220" x2="255" y2="264"/>
+        <line class="wrA" x1="535" y1="220" x2="625" y2="264"/>
+        <rect x="30" y="24" width="230" height="74" rx="11" fill="#14699C"/>
+        <text class="wrT" x="44" y="48">Cohort view · S5</text>
+        <text class="wrS" x="44" y="66">retention curve broke two</text>
+        <text class="wrS" x="44" y="82">quarters ago, every cohort since</text>
+        <rect x="620" y="24" width="230" height="74" rx="11" fill="#14699C"/>
+        <text class="wrT" x="634" y="48">Funnel view · S5</text>
+        <text class="wrS" x="634" y="66">traffic fine - add-to-cart</text>
+        <text class="wrS" x="634" y="82">collapsed after the redesign</text>
+        <rect x="30" y="262" width="230" height="74" rx="11" fill="#2E9BD6"/>
+        <text class="wrT" x="44" y="286">RFM scorer · S5/S7</text>
+        <text class="wrS" x="44" y="304">win back at-risk champions</text>
+        <text class="wrS" x="44" y="320">first - highest $ per save</text>
+        <rect x="620" y="262" width="230" height="74" rx="11" fill="#2E9BD6"/>
+        <text class="wrT" x="634" y="286">Forecast · S6</text>
+        <text class="wrS" x="634" y="304">do nothing → income crosses</text>
+        <text class="wrS" x="634" y="320">$0 within two quarters</text>
+        <text class="wrN" x="330" y="260">WHAT broke: cohorts + funnel</text>
+        <text class="wrN" x="330" y="280">WHO to save: RFM</text>
+        <text class="wrN" x="330" y="300">WHY act now: forecast</text>
+        <text class="wrX" x="330" y="330">Four drills, four one-line findings - the memo writes itself.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the war room wall: four analyses around the tree, each reduced to one line</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The four findings, one per drill<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Churn branch → cohort view (Session 5):</strong> plot retention curves by signup month. Alpine Roast's curves broke two quarters ago - every cohort acquired since retains visibly worse. Something changed then (a price move, a quality dip, a competitor) and the cohorts date-stamp it for you.</li>
+          <li><strong>New-buyer branch → funnel view (Session 5):</strong> traffic is fine at 90,000 visits, product views are fine - but add-to-cart collapsed after the site redesign shipped. The redesign looked prettier and converted worse. The funnel finds the exact broken step in minutes.</li>
+          <li><strong>WHO to win back → RFM (Sessions 5 and 7):</strong> among the 400 churned, the RFM grid flags the at-risk champions - recent big-basket, high-frequency customers who suddenly went quiet. They carry the most recoverable dollars per win-back email, so they go first.</li>
+          <li><strong>WHY act this week → forecast (Session 6):</strong> project the trend forward. If churn stays at 400 and new buyers keep sliding, income crosses $0 within two quarters. A forecast is how you price inaction - and $0 is a very motivating price.</li>
+        </ul>
+        <div class="callout tip">
+          <strong>Notice what just happened</strong>
+          No single analysis solved the case. The tree localized it, cohorts timed it, the funnel found the mechanism, RFM ranked the rescue, the forecast set the deadline. Data literacy is knowing which tool answers which question - and you now hold all five.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: THE MEMO ============ -->
+  <section class="section" id="memo">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · from insight to action</span>
+      <h2>The one-page memo and the weekly review <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Analysis that ends in a meeting is entertainment. Analysis that ends in a memo with owners, dates and dollar figures is management. The template is one page, answer first - Minto's Pyramid Principle from the strategic thinking course, applied to data: lead with THE ANSWER, then support it.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The 1 + 3 + 3 + 1 memo template<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>One page, four blocks, in this order. Line one is the answer - not the background, not the methodology, the answer. Busy readers decide in the first sentence whether the page deserves their attention; earn it immediately.</p>
+        <table class="clean">
+          <thead><tr><th>Block</th><th>Rule</th><th>Alpine Roast version</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1 · THE ANSWER</strong></td><td>one sentence, verdict first</td><td>"Income fell 82% from two fixable causes, not the market."</td></tr>
+            <tr><td><strong>3 findings</strong></td><td>each carries a number</td><td>churn doubled 200 → 400/mo · new buyers slipped 400 → 350 after the redesign broke add-to-cart · do nothing and income hits $0 within two quarters</td></tr>
+            <tr><td><strong>3 actions</strong></td><td>each has owner + date + expected $ recovery</td><td>win-back campaign to at-risk champions (retention lead, 2 weeks, ~$7,500/mo) · fix the add-to-cart flow (e-commerce lead, 3 weeks, ~$3,750/mo) · stand up the weekly metric review (founder, this Monday)</td></tr>
+            <tr><td><strong>1 measurement line</strong></td><td>what we re-read, when</td><td>"Re-read churned count, new buyers and add-to-cart rate in 4 weeks."</td></tr>
+          </tbody>
+        </table>
+        <p>That is the whole artifact. If it does not fit on one page, the analysis is not finished - compression is comprehension.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Metric review hygiene: the lightweight WBR<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The memo fixes this quarter. The weekly metric review prevents the next one - Alpine Roast bled for two quarters because nobody re-read the same numbers regularly enough to see churn bend. The hygiene rules are boring on purpose:</p>
+        <ul>
+          <li><strong>Same metrics, same order, every week.</strong> Familiarity is the anomaly detector - you only notice a bent curve on a chart you have seen 40 times.</li>
+          <li><strong>Anomalies get owners in the room.</strong> Every surprise leaves the meeting attached to a name and a date, or it was just theater.</li>
+          <li><strong>Lightweight.</strong> 30 minutes, one deck that updates itself, no new slides. The moment preparing the review costs more than an hour, it dies.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Amazon's Weekly Business Review</strong> is the famous industrial version: hundreds of metrics, same order every week, reviewed out loud, anomalies interrogated on the spot and assigned. You do not need hundreds - Alpine Roast needs about twelve. The discipline, not the scale, is the technology.</p>
+        </div>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Domino's</strong> ran the culture-level version of today's loop: publicly admit the number is bad (their own pizza scored worst-in-class), instrument everything from order to doorstep, review relentlessly, ship fixes, re-measure in public. A decade later the stock had outperformed the tech giants. Same loop you just ran - diagnosis, action, re-read - held for ten years.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The honest boundary: what this course left out on purpose<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>You now read metrics, funnels, cohorts, RFM grids, forecasts and churn models fluently. Here is what we deliberately did NOT cover: deep learning and neural networks, recommendation engines ("customers also bought"), search ranking, and generative AI. Those systems run on different machinery, raise different questions (what data trained this? when does it hallucinate? what does it cost to be wrong?), and deserve their own literacy course - a sibling AI literacy course will pick up exactly where this page ends.</p>
+        <p>The good news: everything transfers. The ladder, the "so what?" test, evaluation literacy, the memo, the weekly re-read - AI systems are judged with the same habits you built here. You are not starting over; you are adding a wing to a house that now has foundations.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 1 of 3</span>
+      <h2>Re-diagnose Alpine Roast yourself <span class="tag demo">★ 9 min · everyone drives the tree</span></h2>
+    </div>
+    <p class="lede">The tree below loads with the last healthy month. Reproduce the collapse with your own hands, then try to engineer the recovery two different ways - one of them will feel expensive, and that feeling is the lesson.</p>
+    <div class="widget" data-widget="kpitree" data-config='{"title": "★ Alpine Roast - reproduce the collapse, then engineer the recovery", "baseline": {"nw": 400, "ret": 700, "res": 100, "chn": 200, "basket": 3, "item": 25, "cost": 52000}}'></div>
+    <div class="steps">
+      <div class="step"><p>Reproduce the damage: set churned 200 → 400 and new buyers 400 → 350. Confirm income lands at exactly $4,250. Two quiet slider moves, 82% of income gone - feel how silently it happened.</p></div>
+      <div class="step"><p>Now engineer the recovery WITHOUT touching churn: raise basket size, raise item value, cut cost - whatever it takes to get income back near $23,000. Notice what it demands: roughly a full extra item in every basket, or a third of the cost base gone.</p></div>
+      <div class="step"><p>Reset, and instead halve the churn damage: set churned to 300. Compare how far one retention fix moves income versus all that compensating.</p></div>
+      <div class="step"><p>Debrief: fixing the leak beats compensating for it, every time. Squeezing basket, price or cost to paper over churn strains the whole business; plugging the churn branch just puts the money back.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 2 of 3</span>
+      <h2>Fix the funnel that broke new buyers <span class="tag demo">★ 8 min · everyone finds the leak</span></h2>
+    </div>
+    <p class="lede">The second red branch: new buyers slipped after the site redesign. Here is Alpine Roast's acquisition funnel as it looks today. One stage is quietly on fire.</p>
+    <div class="widget" data-widget="funnel" data-config='{"title": "★ Alpine Roast acquisition funnel - after the redesign", "visitors": 90000, "aov": 75, "stages": [{"name": "Visit"}, {"name": "Product view", "cv": 44}, {"name": "Add to cart", "cv": 17}, {"name": "Checkout", "cv": 41}, {"name": "Purchase", "cv": 66}]}'></div>
+    <div class="steps">
+      <div class="step"><p>Find the flagged leak: add-to-cart is converting at 17%. Before the redesign it ran at 30%. Traffic never moved - the redesign broke the step where browsing becomes buying.</p></div>
+      <div class="step"><p>Restore add-to-cart to 30 and read the monthly revenue recovered off the widget. Say the number out loud - that is what the prettier product page has been costing every month.</p></div>
+      <div class="step"><p>Reset add-to-cart to 17 and try doubling visitors instead - the classic "just buy more traffic" reflex. Compare the price tags: pouring traffic into a leaking funnel versus fixing the leak.</p></div>
+      <div class="step"><p>Write the memo's action line 1 from this, in the full format: fix the add-to-cart flow - owner, date, expected monthly $ recovery. You just turned a widget into a commitment.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 3 of 3</span>
+      <h2>Write the memo <span class="tag demo">★ 5 min · everyone drafts</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><p>Using the 1 + 3 + 3 + 1 template from Part 3, draft the one-page memo for Alpine Roast - or for your own business if you brought numbers. Line one is THE ANSWER; no warming up.</p></div>
+      <div class="step"><p>Check every finding carries a number, and every action carries an owner, a date, and an expected $ recovery. A finding without a number is an opinion; an action without an owner is a wish.</p></div>
+      <div class="step"><p>Finish with the measurement line: what exactly gets re-read in 4 weeks, by whom.</p></div>
+      <div class="step"><p>One volunteer reads theirs aloud, answer-first. Notice how different the room feels when the verdict lands in the first ten seconds instead of the last slide.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The debrief question</strong>
+      Compare your memo to the last analysis deck you sat through. How many slides did that deck spend before the answer arrived - and how many of today's four blocks did it contain at all?
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">After the session</span>
+      <h2>This month <span class="tag exercise">◐ the loop, for real</span></h2>
+    </div>
+    <ul>
+      <li><strong>Run the full loop on YOUR business once this month:</strong> tree → drill → memo → 4-week re-read. Pick your ugliest metric, walk it down the tree, drill the moved branch, write the 1+3+3+1 page, and put the re-read date in your calendar today.</li>
+      <li><strong>Start the lightweight weekly metric review:</strong> pick ~12 metrics, same order every week, 30 minutes, anomalies leave with owners. Give it eight weeks before judging - familiarity is what makes it work.</li>
+      <li><strong>Revisit any session page whenever you need it</strong> - the widgets, cheat sheets and cases are yours now. This site does not expire when the course does.</li>
+    </ul>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Monday's dashboard shows income down 40%. Your first move?</p>
+      <button class="qopt" type="button">A · Call the CMO - revenue problems belong to marketing</button>
+      <button class="qopt" type="button">B · Walk the KPI tree - find which branches moved before deciding who to call</button>
+      <button class="qopt" type="button">C · Announce an immediate cost freeze to protect the bottom line</button>
+      <p class="qwhy">Walk the tree, not the org chart. Alpine Roast's collapse had nothing to do with marketing spend or cost - the arithmetic isolated churn and add-to-cart in minutes, and named the right two owners.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · Why does the memo lead with the answer instead of building up to it?</p>
+      <button class="qopt" type="button">A · Busy readers decide in the first line whether the page earns their attention - the answer first, then the support (Minto's pyramid)</button>
+      <button class="qopt" type="button">B · Because the findings and evidence matter less than the conclusion</button>
+      <button class="qopt" type="button">C · Because it makes the memo shorter to write</button>
+      <p class="qwhy">Answer-first is about the reader, not the writer. The findings and actions still do all the supporting work - they just support a verdict the reader already holds, instead of a mystery they may never finish.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">3 · What actually makes a weekly metric review work?</p>
+      <button class="qopt" type="button">A · A fresh dashboard every week so it never gets stale</button>
+      <button class="qopt" type="button">B · Only convening it when a number looks wrong</button>
+      <button class="qopt" type="button">C · Same metrics, same order, every week - and every anomaly leaves the room with an owner</button>
+      <p class="qwhy">Familiarity is the anomaly detector: you spot the bent curve because you have seen the healthy one 40 times. And a surprise without an owner attached is just theater - Alpine Roast's two quiet quarters prove what happens without both.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Concepts covered &amp; their origins</h2>
+    </div>
+    <p class="lede">The capstone credits the whole course's canon - and draws its honest boundary out loud.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">KPI-tree diagnosis (Session 4 decomposition)</span><span class="note">income → revenue → buyers → growth accounting, run on real case numbers - Part 1 + Apply-along 1</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Funnel + cohort + RFM + forecast integration (Sessions 5-7)</span><span class="note">one drill per branch, four one-line findings - Part 2 + Apply-along 2</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Insight-to-action memo (Minto, Pyramid Principle)</span><span class="note">1 answer + 3 findings + 3 actions + 1 measurement line - Part 3 + Apply-along 3</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">WBR-style metric review (Amazon discipline, lightweight)</span><span class="note">same metrics, same order, weekly, anomalies get owners - Part 3 + homework</span></div>
+      <div class="covered-row"><span class="status pill light">✗</span><span class="name">Deep learning, recommendations, search, GenAI</span><span class="note">not covered by design - the AI literacy course picks up here</span></div>
+    </div>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 8 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>The diagnosis drill</b><span>Income drops → walk the tree, not the org chart. Cross off flat branches, name the moved ones, assign one owner per red branch.</span></div>
+      <div class="cheat-item"><b>The drill kit</b><span>Churn → cohorts (when did it break?). Acquisition → funnel (which step broke?). Who to save → RFM (champions first). Why act now → forecast (price of nothing).</span></div>
+      <div class="cheat-item"><b>The memo template</b><span>1 THE ANSWER (line one, verdict first) + 3 findings (each with a number) + 3 actions (each with owner + date + expected $) + 1 measurement line (what we re-read in 4 weeks).</span></div>
+      <div class="cheat-item"><b>Fix the leak first</b><span>Compensating for churn via bigger baskets or cost cuts strains everything; plugging the churn branch just puts the money back. Alpine Roast proved it: $7,500/mo from one retention fix.</span></div>
+      <div class="cheat-item"><b>Metric review hygiene</b><span>Same ~12 metrics, same order, every week, 30 minutes. Anomalies leave the room with an owner or the meeting was theater.</span></div>
+      <div class="cheat-item"><b>The loop is the literacy</b><span>Tree → drill → memo → 4-week re-read, forever. Two quiet branch moves cost Alpine Roast 82% of income; a weekly re-read catches them in week one.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 8 of 8 · learn-data-literacy-with-phoebe · by Phoebe Fu</span>
+    <span><a href="07-ml-basics-segment.html">← Prev: ML basics II: segment and understand</a> &nbsp;·&nbsp; <a href="../index.html">Back to all sessions →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=4"></script>
+<script src="../assets/widgets.js?v=4"></script>
+</body>
+</html>

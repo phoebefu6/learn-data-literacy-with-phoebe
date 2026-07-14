@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 2 · Where data lives - learn data literacy with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=4">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-data-literacy-with-phoebe</a> / Session 2 of 8</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Data Literacy with Phoebe · Session 2 of 8</div>
+    <h1>Where data lives: <span class="accent">the city map of your company's data</span></h1>
+    <p class="sub">Last session you learned what data is. Today: where it physically sits, and why that matters to you. One order will travel from the checkout button to the CFO's dashboard, and by the end you will know why "the dashboard is wrong" is usually a plumbing problem - and exactly what to ask your data engineer.</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Foundation</span>
+      <span class="chip audience">Execs &amp; business leaders</span>
+      <span class="chip audience">Builds on Session 1</span>
+      <span class="chip time">45 min live + self-study</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:3">3-18 · Concepts</span>
+      <span class="a3" style="flex:5">18-40 · Apply-along</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why leaders need the map</h2>
+    </div>
+    <p class="lede">You do not need to build data infrastructure - but you approve its budget, you wait on its timelines, and you trust (or distrust) what comes out of it. Companies store data in a handful of very different places, each built for a different job, and most "data frustration" at the executive level is really a mismatch: asking a place to do a job it was never built for. Today we draw the city map - application databases, warehouses, marts, lakes, lakehouses - and follow one order across it.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill amber">★ Apply-along - interactive, everyone plays</span>
+      <span class="pill inkpill">Real cases: Amazon, Netflix &amp; the data swamps</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Three durable pieces of mental furniture: the OLTP vs OLAP split (why analysis never runs on the checkout database), the city map of five data homes and what each is for, and the pipeline story that explains dashboard freshness - plus the three questions that make you sound dangerous in any data-engineering meeting.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: OLTP VS OLAP ============ -->
+  <section class="section" id="oltp-olap">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · two engines, two jobs</span>
+      <h2>OLTP vs OLAP <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Every company runs two fundamentally different data workloads. One RUNS the business: take the order, charge the card, update the stock - thousands of tiny operations, each in milliseconds. The other ANALYZES the business: scan five years of history and tell me the trend. Same data, opposite engineering. Confusing them is how websites go down.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-lane comparison of OLTP application databases versus OLAP analytical systems with their key attributes">
+        <style>
+          .olT { font: 700 14px Inter, sans-serif; fill: #FFFFFF; }
+          .olS { font: 400 11.5px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .olH { font: 700 13px Inter, sans-serif; fill: #16232E; }
+          .olX { font: 400 12px Inter, sans-serif; fill: #5E6E7A; }
+          .olW { font: 600 12px Inter, sans-serif; fill: #B42318; }
+        </style>
+        <text class="olH" x="40" y="30">Lane 1 · OLTP: run the business</text>
+        <rect x="40" y="44" width="200" height="92" rx="12" fill="#0C3B5C"/>
+        <text class="olT" x="56" y="72">Application DB</text>
+        <text class="olS" x="56" y="92">checkout, payments,</text>
+        <text class="olS" x="56" y="108">inventory, sign-ups</text>
+        <rect x="256" y="44" width="186" height="92" rx="10" fill="#E3F2FC"/>
+        <text class="olH" x="270" y="70">One record at a time</text>
+        <text class="olX" x="270" y="90">read or write single rows</text>
+        <text class="olX" x="270" y="107">in milliseconds, right now</text>
+        <rect x="458" y="44" width="186" height="92" rx="10" fill="#E3F2FC"/>
+        <text class="olH" x="472" y="70">Row-oriented</text>
+        <text class="olX" x="472" y="90">whole rows stored together,</text>
+        <text class="olX" x="472" y="107">perfect for "fetch order 4812"</text>
+        <rect x="660" y="44" width="180" height="92" rx="10" fill="#E3F2FC"/>
+        <text class="olH" x="674" y="70">Users: software</text>
+        <text class="olX" x="674" y="90">the website, the app,</text>
+        <text class="olX" x="674" y="107">the payment gateway</text>
+        <text class="olH" x="40" y="176">Lane 2 · OLAP: analyze the business</text>
+        <rect x="40" y="190" width="200" height="92" rx="12" fill="#14699C"/>
+        <text class="olT" x="56" y="218">Analytical store</text>
+        <text class="olS" x="56" y="238">warehouse, lake,</text>
+        <text class="olS" x="56" y="254">dashboards on top</text>
+        <rect x="256" y="190" width="186" height="92" rx="10" fill="#E3F2FC"/>
+        <text class="olH" x="270" y="216">Big scans of history</text>
+        <text class="olX" x="270" y="236">read millions of rows to</text>
+        <text class="olX" x="270" y="253">answer one trend question</text>
+        <rect x="458" y="190" width="186" height="92" rx="10" fill="#E3F2FC"/>
+        <text class="olH" x="472" y="216">Column-oriented</text>
+        <text class="olX" x="472" y="236">columns stored together,</text>
+        <text class="olX" x="472" y="253">perfect for "sum all revenue"</text>
+        <rect x="660" y="190" width="180" height="92" rx="10" fill="#E3F2FC"/>
+        <text class="olH" x="674" y="216">Users: people</text>
+        <text class="olX" x="674" y="236">analysts, dashboards,</text>
+        <text class="olX" x="674" y="253">the CFO on Monday</text>
+        <text class="olW" x="40" y="308">Cross the lanes and you pay: a 5-year report scanning the checkout DB</text>
+        <text class="olW" x="480" y="308">competes with live orders. On Black Friday, orders lose.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - two lanes, and the one crossing that takes websites down</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Why the CFO's report must never touch the checkout database<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>An application database (OLTP: online transaction processing) is tuned like a race car for one move: find one record, change it, confirm it, in a few milliseconds, ten thousand times a minute. An analytical system (OLAP: online analytical processing) is tuned like a freight train: haul enormous loads of history in one slow, powerful pass.</p>
+        <ul>
+          <li><strong>Run a freight job on the race car</strong> and every customer at checkout waits behind the CFO's five-year revenue scan. Pages time out, carts abandon, and on peak days the site simply falls over.</li>
+          <li><strong>That is why data gets copied.</strong> Companies duplicate data out of the application DB into analytical stores - not bureaucracy, physics. Two workloads, two engines.</li>
+          <li><strong>The exec tell:</strong> if a "simple report" request gets pushback from engineering, this split is usually why. The data exists; the safe place to query it may not yet.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Amazon learned this the expensive way:</strong> during the 2004 holiday season, outages traced back to overloaded transactional databases pushed Amazon to redesign how it stores order data - work that produced its famous Dynamo system, built so checkout stays fast no matter what else is happening. The lesson stuck industry-wide: protect the transaction path, and analyze somewhere else.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Row vs column storage, the 60-second intuition<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Imagine customer records as a giant paper ledger.</p>
+        <ul>
+          <li><strong>Row storage</strong> keeps each customer's full record on one line: name, email, city, total spend. To answer "show me customer 4812", you read one line - instant. That is OLTP's layout.</li>
+          <li><strong>Column storage</strong> keeps each column as its own long list: all names together, all spends together. To answer "sum total spend across 50 million customers", you read just the spend list and skip everything else - hundreds of times faster than reading 50 million full lines. That is OLAP's layout.</li>
+        </ul>
+        <p>Same information, different filing. Neither is "better" - each is unbeatable at its own job and painful at the other's. When someone name-drops "columnar" (Snowflake, BigQuery, Redshift), they mean "built for the freight-train scans".</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: THE CITY MAP ============ -->
+  <section class="section" id="city-map">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · five places, one map</span>
+      <h2>Warehouse, mart, lake, lakehouse <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">Think of your company's data estate as a small city. Applications are the shops where business happens. Everything else exists to move what the shops record into places where people can learn from it - a library, its branches, and a harbor district full of raw cargo.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="City map of data homes: application databases feed the warehouse and the lake, the warehouse feeds department marts, and the lakehouse merges lake and warehouse ideas">
+        <style>
+          .cmT { font: 700 13.5px Inter, sans-serif; fill: #FFFFFF; }
+          .cmS { font: 400 11px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .cmH { font: 700 12.5px Inter, sans-serif; fill: #16232E; }
+          .cmX { font: 400 11.5px Inter, sans-serif; fill: #5E6E7A; }
+          .cmN { font: 600 12px Inter, sans-serif; fill: #BE123C; }
+          .cmA { stroke: #C3CFD8; stroke-width: 2.5; fill: none; marker-end: url(#cmAh); }
+        </style>
+        <defs>
+          <marker id="cmAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#C3CFD8" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="30" y="130" width="190" height="96" rx="12" fill="#0C3B5C"/>
+        <text class="cmT" x="46" y="158">The shops</text>
+        <text class="cmS" x="46" y="178">application DBs (OLTP):</text>
+        <text class="cmS" x="46" y="194">checkout, CRM, ERP -</text>
+        <text class="cmS" x="46" y="210">where order #4812 is born</text>
+        <rect x="330" y="40" width="220" height="96" rx="12" fill="#14699C"/>
+        <text class="cmT" x="346" y="68">Data warehouse</text>
+        <text class="cmS" x="346" y="88">the city library: cleaned,</text>
+        <text class="cmS" x="346" y="104">joined, governed - one</text>
+        <text class="cmS" x="346" y="120">source of truth for history</text>
+        <rect x="650" y="40" width="200" height="96" rx="12" fill="#2E9BD6"/>
+        <text class="cmT" x="666" y="68">Data marts</text>
+        <text class="cmS" x="666" y="88">branch libraries: finance</text>
+        <text class="cmS" x="666" y="104">mart, marketing mart -</text>
+        <text class="cmS" x="666" y="120">curated slice per team</text>
+        <rect x="330" y="220" width="220" height="96" rx="12" fill="#2E9BD6"/>
+        <text class="cmT" x="346" y="248">Data lake</text>
+        <text class="cmS" x="346" y="268">the harbor district: raw</text>
+        <text class="cmS" x="346" y="284">everything - logs, clicks,</text>
+        <text class="cmS" x="346" y="300">images. Cheap, schema-later</text>
+        <rect x="650" y="220" width="200" height="96" rx="12" fill="#BE123C"/>
+        <text class="cmT" x="666" y="248">Lakehouse</text>
+        <text class="cmS" x="666" y="268">the modern merge: lake</text>
+        <text class="cmS" x="666" y="284">economics + warehouse</text>
+        <text class="cmS" x="666" y="300">governance, one copy</text>
+        <line class="cmA" x1="220" y1="152" x2="325" y2="96"/>
+        <line class="cmA" x1="220" y1="204" x2="325" y2="260"/>
+        <line class="cmA" x1="550" y1="88" x2="645" y2="88"/>
+        <line class="cmA" x1="550" y1="268" x2="645" y2="268"/>
+        <line class="cmA" x1="770" y1="136" x2="770" y2="215"/>
+        <text class="cmX" x="236" y="110">cleaned nightly</text>
+        <text class="cmX" x="236" y="252">dumped raw</text>
+        <text class="cmN" x="30" y="290">Order #4812 appears in all of them:</text>
+        <text class="cmN" x="30" y="308">raw in the lake, cleaned in the</text>
+        <text class="cmN" x="30" y="326">warehouse, sliced in finance's mart.</text>
+        <text class="cmX" x="30" y="352">Kimball vs Inmon: two classic schools of warehouse design - a name-drop to recognize, not a decision you own.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the city map: shops, library, branches, harbor, and the modern merge</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>What each place is for (and what happens when you skip governance)<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Data warehouse - the city library.</strong> Data arrives cleaned, deduplicated, joined and catalogued so everyone reads the same truth. Slow to build, wonderful to use. The two founding schools of shelf-design are Kimball and Inmon - recognize the names, let your architects fight about them.</li>
+          <li><strong>Data mart - the branch library.</strong> A department-sized slice of the warehouse: finance gets its tables, marketing gets its campaigns. Faster, closer, less waiting on the central team.</li>
+          <li><strong>Data lake - the harbor warehouse district.</strong> Everything unloaded raw: clickstreams, logs, images, exports. Extremely cheap per terabyte, no upfront structure ("schema-later"). Brilliant for data science exploration; useless for a board pack until someone refines it.</li>
+          <li><strong>Lakehouse - the modern merge.</strong> The last few years' big idea (the Databricks and Snowflake era): keep the lake's cheap open storage but add the warehouse's tables, governance and reliability on top of one copy of the data - instead of paying to maintain both places.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Netflix runs its analytics on a lake-turned-lakehouse:</strong> petabytes of viewing and operational data on cheap cloud storage, made trustworthy by a table layer Netflix built and open-sourced (Apache Iceberg) - lake economics, warehouse manners. The cautionary twin: industry post-mortems have long estimated that a large share of early data lakes - figures around 80% get cited - decayed into "data swamps" because companies bought the cheap storage but skipped the cataloguing and governance. The harbor fills up either way; only governed harbors pay rent.</p>
+        </div>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          When someone pitches "a data lake" or "a lakehouse migration", ask one question: "and who owns the catalogue?" If nobody can name the person or team keeping track of what is in there and what it means, you are approving a swamp with a nicer logo.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: ETL / ELT ============ -->
+  <section class="section" id="pipelines">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · the journey of one order</span>
+      <h2>ETL, ELT and why dashboards go stale <span class="tag concept">4 min live</span></h2>
+    </div>
+    <p class="lede">Between the shops and the library run the delivery trucks: pipelines. Extract data from the source, Transform it into clean shape, Load it into the warehouse - ETL. The modern default flips the last two letters: ELT loads raw data first and transforms it inside the warehouse, where compute is cheap and every step is repeatable.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline journey of one order from checkout at midnight through nightly sync to a fresh CFO dashboard at 8am">
+        <style>
+          .ppT { font: 700 13px Inter, sans-serif; fill: #FFFFFF; }
+          .ppS { font: 400 11px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .ppH { font: 700 12.5px Inter, sans-serif; fill: #16232E; }
+          .ppX { font: 400 12px Inter, sans-serif; fill: #5E6E7A; }
+          .ppW { font: 600 12px Inter, sans-serif; fill: #B42318; }
+          .ppA { stroke: #C3CFD8; stroke-width: 2.5; fill: none; marker-end: url(#ppAh); }
+        </style>
+        <defs>
+          <marker id="ppAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#C3CFD8" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="30" y="60" width="170" height="80" rx="11" fill="#0C3B5C"/>
+        <text class="ppT" x="44" y="88">00:00 · Checkout</text>
+        <text class="ppS" x="44" y="106">order #4812 saved in</text>
+        <text class="ppS" x="44" y="122">the app DB (OLTP)</text>
+        <rect x="240" y="60" width="170" height="80" rx="11" fill="#14699C"/>
+        <text class="ppT" x="254" y="88">02:00 · Extract + load</text>
+        <text class="ppS" x="254" y="106">nightly sync copies raw</text>
+        <text class="ppS" x="254" y="122">rows out of the app DB</text>
+        <rect x="450" y="60" width="170" height="80" rx="11" fill="#14699C"/>
+        <text class="ppT" x="464" y="88">02:40 · Transform</text>
+        <text class="ppS" x="464" y="106">clean, dedupe, join to</text>
+        <text class="ppS" x="464" y="122">customer + product data</text>
+        <rect x="660" y="60" width="190" height="80" rx="11" fill="#2E9BD6"/>
+        <text class="ppT" x="674" y="88">03:10 · Warehouse</text>
+        <text class="ppS" x="674" y="106">order lands in the</text>
+        <text class="ppS" x="674" y="122">governed sales tables</text>
+        <rect x="450" y="190" width="170" height="76" rx="11" fill="#2E9BD6"/>
+        <text class="ppT" x="464" y="218">03:30 · Finance mart</text>
+        <text class="ppS" x="464" y="236">curated revenue slice</text>
+        <text class="ppS" x="464" y="252">refreshes for the team</text>
+        <rect x="240" y="190" width="170" height="76" rx="11" fill="#BE123C"/>
+        <text class="ppT" x="254" y="218">08:00 · Dashboard</text>
+        <text class="ppS" x="254" y="236">CFO opens it: fresh</text>
+        <text class="ppS" x="254" y="252">as of last midnight</text>
+        <line class="ppA" x1="200" y1="100" x2="235" y2="100"/>
+        <line class="ppA" x1="410" y1="100" x2="445" y2="100"/>
+        <line class="ppA" x1="620" y1="100" x2="655" y2="100"/>
+        <line class="ppA" x1="755" y1="140" x2="625" y2="212"/>
+        <line class="ppA" x1="445" y1="228" x2="415" y2="228"/>
+        <text class="ppX" x="30" y="180">ELT = load raw first, transform inside the warehouse. The modern default.</text>
+        <text class="ppW" x="30" y="288">If the 02:00 truck breaks down, the 08:00 dashboard is not wrong - it is yesterday.</text>
+        <text class="ppX" x="500" y="288">Always ask: wrong, or just late?</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - one order's overnight commute from checkout to the CFO's screen</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>"The dashboard is wrong" - the leader's diagnostic<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Most "wrong" dashboards are late dashboards.</strong> A pipeline failed overnight, numbers froze at yesterday, and nobody was told. Before doubting the analysis, ask when the data last refreshed.</li>
+          <li><strong>The second most common cause: two trucks, two routes.</strong> Marketing's number comes through one pipeline, finance's through another, with slightly different cleaning rules. Both "correct", never equal. Session 4 fixes this with a shared metric layer.</li>
+          <li><strong>ETL vs ELT in one sentence for meetings:</strong> ETL cleans on the way in; ELT dumps raw and cleans inside the warehouse - cheaper, more flexible, and every transformation is written down where it can be audited and rerun.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Airbnb had so many delivery trucks it built a traffic-control tower:</strong> by 2014 its pipeline count outgrew human tracking, so engineers built Airflow, a scheduler that watches every job and flags failures - later open-sourced and now standard across the industry. The takeaway for the boardroom: pipeline monitoring is not gold-plating, it is why your Monday numbers can be trusted on Monday.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Three questions to ask your data engineer<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <thead><tr><th>Question</th><th>What it surfaces</th><th>Good answer sounds like</th></tr></thead>
+          <tbody>
+            <tr><td>"How fresh is this number?"</td><td>pipeline schedule + last successful run</td><td>"Synced nightly at 02:00; last run succeeded."</td></tr>
+            <tr><td>"Where does this break, and who finds out?"</td><td>monitoring and alerting maturity</td><td>"Failures page the on-call and stamp the dashboard."</td></tr>
+            <tr><td>"What does keeping this flowing cost?"</td><td>cloud compute + maintenance load</td><td>"About X per month; the big join is the expensive bit."</td></tr>
+          </tbody>
+        </table>
+        <p>Cloud economics footnote: storage is famously cheap, compute is what bills you. A lake full of cold data costs coffee money; scanning it carelessly every hour is what makes the invoice interesting. That is one reason ELT won - and one more reason the catalogue matters.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 1 of 3</span>
+      <h2>Map YOUR company's city <span class="tag demo">★ 6 min · everyone maps</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><p>Two minutes solo: list the systems in your business that hold data - ERP, CRM, web analytics, the e-commerce platform, HR system, support desk, and yes, the spreadsheets.</p></div>
+      <div class="step"><p>Tag each one OLTP-ish (runs the business, live records) or OLAP-ish (analyzes the business, history and summaries). Some will be both - flag those, they are usually the pain points.</p></div>
+      <div class="step"><p>Now find the "spreadsheet shadow warehouse": the workbook someone exports into every Monday, joins by hand, and half the company quietly treats as the source of truth. Every company has at least one.</p></div>
+      <div class="step"><p>Compare with a neighbor: whose shadow warehouse is scarier? Keep your map - Session 4 builds the metric layer that retires it.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The exec move</strong>
+      The shadow spreadsheet is not the villain - it is evidence. It marks exactly where the official city map failed someone badly enough that they built their own road. Fund the road; do not just ban the spreadsheet.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 2 of 3</span>
+      <h2>Right workload, right home <span class="tag demo">★ 8 min · everyone sorts</span></h2>
+    </div>
+    <p class="lede">Six jobs from one company. Send each to the place built for it. Two are sneaky.</p>
+    <div class="widget" data-widget="sorter" data-config='{
+  "title": "★ Right workload, right home",
+  "intro": "Click where each job belongs. Green = placed correctly.",
+  "categories": ["OLTP app DB", "Warehouse", "Data lake", "Data mart"],
+  "items": [
+    {"t": "Take the order and charge the card - in 200 milliseconds, right now.", "c": 0, "why": "transactional speed on single records is exactly what application databases do"},
+    {"t": "One cleaned, joined, governed source of truth for 5 years of company history.", "c": 1, "why": "that is the warehouse job description"},
+    {"t": "Store raw clickstream, images and logs cheaply - we will decide how to use them later.", "c": 2, "why": "schema-later, cheap storage = the lake"},
+    {"t": "Give marketing its own curated slice of campaign tables so they stop waiting on the central team.", "c": 3, "why": "a department-scoped mart"},
+    {"t": "Check live stock levels while the customer is on the checkout page.", "c": 0, "why": "operational, real-time, single record - OLTP"},
+    {"t": "A 5-year trend joining sales, support tickets and finance data.", "c": 1, "why": "cross-domain history is warehouse territory"}
+  ]}'></div>
+    <div class="callout tip">
+      <strong>The debrief question</strong>
+      Which placement did the room argue about? It is almost always the stock check - "analytics-sounding" words like "check levels" hide an operational, right-now job. Workload, not vocabulary, decides the home.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 3 of 3</span>
+      <h2>The freshness audit <span class="tag demo">★ 7 min · everyone audits</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><p>Pick 3 numbers you personally saw this week: a dashboard tile, a number in a deck, a figure quoted in a meeting.</p></div>
+      <div class="step"><p>For each, answer (or honestly guess): how fresh is it - real-time, last night, last week, or "when someone last exported it"? And which home did it come from - app DB, warehouse, mart, lake, or a shadow spreadsheet?</p></div>
+      <div class="step"><p>Mark the scariest one: the number you weight heavily in decisions but whose freshness and origin you just guessed at. Most rooms discover at least one board-level number nobody can trace.</p></div>
+      <div class="step"><p>Write the single question you will actually send your data engineer this week - steal from the self-study table above. That question is today's deliverable.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">After the session</span>
+      <h2>This week <span class="tag exercise">◐ 25 min total</span></h2>
+    </div>
+    <ul>
+      <li><strong>Send your freshness question</strong> from Apply-along 3 to a real data engineer or analyst, and note how long the honest answer takes to arrive. The lag itself is data.</li>
+      <li><strong>Finish your city map</strong> from Apply-along 1: every system tagged OLTP-ish or OLAP-ish, shadow warehouses circled in red.</li>
+      <li><strong>Read the self-study cards</strong> above: row vs column storage, and the three engineer questions.</li>
+      <li><strong>Optional deep end:</strong> the Kimball Group's "dimensional modeling" primer, first pages only - to see what your architects mean by facts and dimensions.</li>
+    </ul>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · Why should the CFO's five-year revenue report never run directly on the checkout database?</p>
+      <button class="qopt" type="button">A · The checkout database deletes history after 30 days</button>
+      <button class="qopt" type="button">B · Finance data is too sensitive for application databases</button>
+      <button class="qopt" type="button">C · Big analytical scans compete with live transactions on an engine tuned for milliseconds - customers at checkout pay the price</button>
+      <p class="qwhy">OLTP engines are race cars for single records; a five-year scan is a freight job. Run it there and on a peak day the site slows or falls over - which is why data is copied to OLAP stores at all.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · Your team debates "lake vs warehouse" for a new initiative. What is the actual tradeoff?</p>
+      <button class="qopt" type="button">A · Lake = cheap, raw, flexible but ungoverned until refined; warehouse = cleaned, governed, trustworthy but more upfront work</button>
+      <button class="qopt" type="button">B · Lakes are for big companies, warehouses for small ones</button>
+      <button class="qopt" type="button">C · Warehouses are obsolete - lakes replaced them years ago</button>
+      <p class="qwhy">It is a tradeoff between cost-and-flexibility and trust-and-readiness. Lakes shine for exploration and raw scale; warehouses shine for the numbers you put in front of a board. Skip governance on a lake and you get a swamp.</p>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · A vendor pitches a "lakehouse". What is the promise you should test?</p>
+      <button class="qopt" type="button">A · Unlimited free storage for all company data</button>
+      <button class="qopt" type="button">B · Lake economics with warehouse governance - cheap open storage plus reliable, managed tables on ONE copy of the data</button>
+      <button class="qopt" type="button">C · It removes the need for data engineers entirely</button>
+      <p class="qwhy">The lakehouse pitch is "stop paying to run a lake AND a warehouse". The test question stays the same as ever: who owns the catalogue and the governance? The architecture enables trust; people still have to supply it.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Concepts covered &amp; their origins</h2>
+    </div>
+    <p class="lede">The working 80% of each idea, credited to its canon - the deep end stays open for anyone who wants to swim.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">OLTP vs OLAP</span><span class="note">two engines, row vs column intuition - Part 1 + Apply-along 2</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Warehouse &amp; data mart</span><span class="note">city library + branch libraries - Part 2 + Apply-along 2</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Data lake &amp; lakehouse</span><span class="note">harbor district + the modern merge, swamp warning - Part 2</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">ETL / ELT pipelines</span><span class="note">the journey of one order, freshness diagnostics - Part 3 + Apply-along 3</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Kimball vs Inmon</span><span class="note">name-drop only - the two warehouse design schools your architects argue about</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Cloud cost economics</span><span class="note">self-study footnote - storage cheap, compute expensive, catalogue accordingly</span></div>
+    </div>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 2 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>OLTP vs OLAP</b><span>Race car vs freight train. Apps run the business on single records in milliseconds; analytics scans history in bulk. Never cross the lanes.</span></div>
+      <div class="cheat-item"><b>The city map</b><span>App DBs = shops · warehouse = city library · marts = branches · lake = harbor of raw cargo · lakehouse = lake economics + warehouse governance.</span></div>
+      <div class="cheat-item"><b>Swamp warning</b><span>A lake without a catalogue and an owner becomes a swamp - most early ones did. Always ask: "who owns the catalogue?"</span></div>
+      <div class="cheat-item"><b>ETL vs ELT</b><span>ETL cleans on the way in; ELT loads raw and transforms inside the warehouse - the modern default, auditable and rerunnable.</span></div>
+      <div class="cheat-item"><b>Wrong, or just late?</b><span>Most "wrong" dashboards are stale ones - a pipeline failed overnight. Ask when the data last refreshed before doubting the analysis.</span></div>
+      <div class="cheat-item"><b>Shadow warehouse</b><span>The Monday-export spreadsheet half the company trusts. It marks where the official map failed someone. Fund the fix, not just the ban.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 2 of 8 · learn-data-literacy-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="01-think-in-data.html">← Prev: Think in data</a> &nbsp;·&nbsp; <a href="03-eda-and-stats.html">Next: EDA and stats that do not lie →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=4"></script>
+<script src="../assets/widgets.js?v=4"></script>
+</body>
+</html>

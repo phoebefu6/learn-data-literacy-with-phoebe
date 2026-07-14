@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 7 · ML basics II: segment and understand customers - learn data literacy with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=4">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-data-literacy-with-phoebe</a> / Session 7 of 8</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Data Literacy with Phoebe · Session 7 of 8</div>
+    <h1>ML basics II: <span class="accent">segment and understand customers</span></h1>
+    <p class="sub">Session 6 predicted the future; today we understand the present. Clustering finds the customer groups you did not know you had, sentiment analysis reads ten thousand reviews before lunch, and CLV puts a price tag on every other decision you make. The algorithms find the shapes - naming them and acting on them stays gloriously human.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Stretch</span>
+      <span class="chip audience">Execs &amp; business leaders</span>
+      <span class="chip audience">Builds on Sessions 5-6</span>
+      <span class="chip time">45 min live + self-study</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:3">3-18 · Concepts</span>
+      <span class="a3" style="flex:5">18-40 · Apply-along</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this session exists</h2>
+    </div>
+    <p class="lede">Session 6 was supervised learning: history came with answers attached. Today the answers are missing on purpose. Nobody labels customers "bargain hunter" or reviews "secretly furious" - yet those structures are in your data, waiting. This session covers the three unsupervised-and-adjacent tools every leader ends up buying: clustering, sentiment analysis, and customer lifetime value. Same rules as always: executive intuition, no math, no code. And the same honest boundary: recommendations, search and GenAI are out of scope by design - they belong to the future AI literacy course.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill amber">★ Apply-along - interactive, everyone plays</span>
+      <span class="pill inkpill">Real cases: Tesco Clubcard, airline sentiment, Harrah's</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Three durable instincts: how k-means actually works (four moves you can mime with your hands), the division of labor that governs all applied ML (algorithm finds the shape, humans name it and act), and the CLV:CAC ratio - the one number that tells you whether growth is building a business or burning one.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: UNSUPERVISED / CLUSTERING ============ -->
+  <section class="section" id="clustering">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · finding the groups</span>
+      <h2>Unsupervised learning: finding structure without labels <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">No right answers to learn from - so the algorithm does the only thing it can: group what is similar. Feed it customers described by numbers (orders per year, basket size, recency) and it hands back clusters. Whether those clusters mean anything is where you come in.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four panels showing k-means steps: drop k pins, assign points to nearest pin, move each pin to the center of its group, repeat until nothing moves">
+        <style>
+          .kmH { font: 700 13px Inter, sans-serif; fill: #16232E; }
+          .kmX { font: 400 11.5px Inter, sans-serif; fill: #5E6E7A; }
+          .kmD { fill: #5E6E7A; }
+          .kmP1 { fill: none; stroke: #0C3B5C; stroke-width: 3; }
+          .kmP2 { fill: none; stroke: #14699C; stroke-width: 3; }
+          .kmP3 { fill: none; stroke: #2E9BD6; stroke-width: 3; }
+        </style>
+        <text class="kmH" x="30" y="34">1 · Drop k pins (k = 3)</text>
+        <rect x="30" y="46" width="185" height="150" rx="10" fill="#E3F2FC"/>
+        <circle class="kmD" cx="70" cy="82" r="4"/><circle class="kmD" cx="95" cy="96" r="4"/><circle class="kmD" cx="80" cy="116" r="4"/>
+        <circle class="kmD" cx="160" cy="76" r="4"/><circle class="kmD" cx="180" cy="100" r="4"/><circle class="kmD" cx="150" cy="106" r="4"/>
+        <circle class="kmD" cx="110" cy="156" r="4"/><circle class="kmD" cx="135" cy="170" r="4"/><circle class="kmD" cx="90" cy="172" r="4"/>
+        <circle class="kmP1" cx="120" cy="126" r="7"/><circle class="kmP2" cx="70" cy="156" r="7"/><circle class="kmP3" cx="180" cy="146" r="7"/>
+        <text class="kmH" x="245" y="34">2 · Assign to nearest pin</text>
+        <rect x="245" y="46" width="185" height="150" rx="10" fill="#E3F2FC"/>
+        <circle fill="#0C3B5C" cx="285" cy="82" r="4"/><circle fill="#0C3B5C" cx="310" cy="96" r="4"/><circle fill="#0C3B5C" cx="295" cy="116" r="4"/>
+        <circle fill="#2E9BD6" cx="375" cy="76" r="4"/><circle fill="#2E9BD6" cx="395" cy="100" r="4"/><circle fill="#2E9BD6" cx="365" cy="106" r="4"/>
+        <circle fill="#14699C" cx="325" cy="156" r="4"/><circle fill="#14699C" cx="350" cy="170" r="4"/><circle fill="#14699C" cx="305" cy="172" r="4"/>
+        <circle class="kmP1" cx="335" cy="126" r="7"/><circle class="kmP2" cx="285" cy="156" r="7"/><circle class="kmP3" cx="395" cy="146" r="7"/>
+        <text class="kmH" x="460" y="34">3 · Move pin to its center</text>
+        <rect x="460" y="46" width="185" height="150" rx="10" fill="#E3F2FC"/>
+        <circle fill="#0C3B5C" cx="500" cy="82" r="4"/><circle fill="#0C3B5C" cx="525" cy="96" r="4"/><circle fill="#0C3B5C" cx="510" cy="116" r="4"/>
+        <circle fill="#2E9BD6" cx="590" cy="76" r="4"/><circle fill="#2E9BD6" cx="610" cy="100" r="4"/><circle fill="#2E9BD6" cx="580" cy="106" r="4"/>
+        <circle fill="#14699C" cx="540" cy="156" r="4"/><circle fill="#14699C" cx="565" cy="170" r="4"/><circle fill="#14699C" cx="520" cy="172" r="4"/>
+        <circle class="kmP1" cx="512" cy="98" r="7"/><circle class="kmP2" cx="542" cy="166" r="7"/><circle class="kmP3" cx="593" cy="94" r="7"/>
+        <text class="kmH" x="675" y="34">4 · Repeat until still</text>
+        <rect x="675" y="46" width="185" height="150" rx="10" fill="#E3F2FC"/>
+        <circle fill="#0C3B5C" cx="715" cy="82" r="4"/><circle fill="#0C3B5C" cx="740" cy="96" r="4"/><circle fill="#0C3B5C" cx="725" cy="116" r="4"/>
+        <circle fill="#2E9BD6" cx="805" cy="76" r="4"/><circle fill="#2E9BD6" cx="825" cy="100" r="4"/><circle fill="#2E9BD6" cx="795" cy="106" r="4"/>
+        <circle fill="#14699C" cx="755" cy="156" r="4"/><circle fill="#14699C" cx="780" cy="170" r="4"/><circle fill="#14699C" cx="735" cy="172" r="4"/>
+        <circle class="kmP1" cx="727" cy="98" r="7"/><circle class="kmP2" cx="757" cy="166" r="7"/><circle class="kmP3" cx="808" cy="94" r="7"/>
+        <text class="kmX" x="675" y="216">converged - groups are stable</text>
+        <text class="kmX" x="30" y="238">Rings = the k pins (cluster centers). Assign, move, repeat - that loop is the entire k-means algorithm.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - k-means in four moves; you will drive this loop yourself in Apply-along 1</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>k-means in plain words, and the k question<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>The whole algorithm:</strong> drop k pins on the map of your customers, assign each customer to the nearest pin, move each pin to the center of its crowd, repeat until nothing moves. That is it - no magic, just tidy averaging in a loop.</li>
+          <li><strong>Choosing k is a judgment call.</strong> The elbow method gives a statistical hint (add clusters until the improvement flattens), but the real test is managerial: <strong>every segment must be nameable and actionable, or it is noise.</strong> If you cannot brief marketing on segment 4 in one sentence, you have too many segments.</li>
+          <li><strong>One-line alternative:</strong> hierarchical clustering builds a family tree of similarity (the dendrogram) - you cut the tree at the number of branches you want. Same ends, different route.</li>
+          <li><strong>RFM × clustering - the power combo.</strong> Session 5's recency, frequency and monetary scores make superb clustering inputs. Rules gave you the grid you designed; clustering finds the shapes you did NOT think to look for - the "big basket but fading" pocket no grid cell captured.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Tesco Clubcard, run with dunnhumby, is the founding legend of retail clustering.</strong> Loyalty-card baskets were clustered into shopper types - price-sensitive families, fine-food loyalists, convenience top-uppers - and the segments reshaped store ranging, promotions and mailings. The famous result: coupon redemption rates competitors could not touch, and a chairman who admitted dunnhumby knew Tesco's customers better than Tesco's own veterans did. The clusters did not sell anything - the actions built on them did.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: SENTIMENT ============ -->
+  <section class="section" id="sentiment">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · reading text at scale</span>
+      <h2>Sentiment analysis: reading text at scale <span class="tag concept">4 min live</span></h2>
+    </div>
+    <p class="lede">Your customers write to you constantly - reviews, tickets, tweets - and no human team can read it all. Basic sentiment analysis is the triage nurse: crude, fast, and good enough to tell you where it hurts.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sentiment pipeline: ten thousand reviews flow through word counting, sentiment scoring and theme ranking into one product decision">
+        <style>
+          .spT { font: 700 13px Inter, sans-serif; fill: #FFFFFF; }
+          .spS { font: 400 11px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .spK { font: 700 13px Inter, sans-serif; fill: #16232E; }
+          .spX { font: 400 11px Inter, sans-serif; fill: #5E6E7A; }
+          .spW { font: 600 12px Inter, sans-serif; fill: #B42318; }
+          .spA { stroke: #C3CFD8; stroke-width: 2.5; fill: none; marker-end: url(#spAh); }
+        </style>
+        <defs>
+          <marker id="spAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#C3CFD8" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="30" y="44" width="150" height="66" rx="11" fill="#E3F2FC"/>
+        <text class="spK" x="44" y="70">10,000 reviews</text>
+        <text class="spX" x="44" y="88">raw, unread text</text>
+        <line class="spA" x1="180" y1="77" x2="202" y2="77"/>
+        <rect x="206" y="44" width="150" height="66" rx="11" fill="#2E9BD6"/>
+        <text class="spT" x="220" y="70">Words counted</text>
+        <text class="spS" x="220" y="88">bag-of-words, no grammar</text>
+        <line class="spA" x1="356" y1="77" x2="378" y2="77"/>
+        <rect x="382" y="44" width="150" height="66" rx="11" fill="#14699C"/>
+        <text class="spT" x="396" y="70">Sentiment scored</text>
+        <text class="spS" x="396" y="88">pos / neg per review</text>
+        <line class="spA" x1="532" y1="77" x2="554" y2="77"/>
+        <rect x="558" y="44" width="150" height="66" rx="11" fill="#0C3B5C"/>
+        <text class="spT" x="572" y="70">Themes ranked</text>
+        <text class="spS" x="572" y="88">"battery" up, "screen" down</text>
+        <line class="spA" x1="708" y1="77" x2="730" y2="77"/>
+        <rect x="734" y="44" width="124" height="66" rx="11" fill="#BE123C"/>
+        <text class="spT" x="746" y="70">One product</text>
+        <text class="spT" x="746" y="88">decision</text>
+        <text class="spW" x="30" y="146">Where it breaks: "Great, my flight is delayed AGAIN" scores positive - sarcasm and context beat word counting.</text>
+        <text class="spX" x="30" y="168">That failure line is exactly where the future AI literacy course picks up. Today's tools are the honest 80%.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the triage pipeline from unread text to one ranked decision</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The basic recipe, and where it honestly breaks<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Step 1 - the lexicon:</strong> count positive and negative words from a dictionary. "Love, fast, perfect" versus "broken, refund, never". Crude, transparent, surprisingly useful.</li>
+          <li><strong>Step 2 - bag-of-words + a simple classifier:</strong> treat each review as a bag of word counts and let naive bayes learn which words make a review likely-negative ("refund" is a lot of evidence, "the" is none). Still no grammar, still fast, noticeably smarter.</li>
+          <li><strong>What it buys you:</strong> triage at scale. Thousands of reviews and tickets sorted by pain, themes ranked by frequency and negativity, releases compared before and after. Direction, not poetry.</li>
+          <li><strong>Where it breaks:</strong> sarcasm, negation and context. "Great, delayed again" reads as positive; "not bad at all" reads as negative. When the stakes need real understanding, that is the AI literacy course's turf - do not buy a hedge trimmer and expect a forester.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Airlines mine tweets and reviews to route service recovery in real time</strong> - a spike of angry mentions on one route pages the ops team before the morning report exists. Product teams run the same trick per release: sentiment by theme, this version versus last, tells them whether "battery" complaints actually fell after the fix. Nobody reads 10,000 tweets; everybody reads the ranked themes.</p>
+        </div>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          When shown a sentiment dashboard, ask "sorted by which themes?" A single overall score ("sentiment is 72!") is a vanity metric; sentiment BY THEME, trended across releases, is a to-do list.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: CLV ============ -->
+  <section class="section" id="clv">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · the master number</span>
+      <h2>CLV: the metric that prices every other decision <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">Customer lifetime value answers the only question marketing budgets really turn on: what is a customer worth over their whole relationship with you? Get CLV roughly right and acquisition spend, retention offers and even the churn threshold from Session 6 all price themselves.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CLV workhorse formula as boxes: average order value times frequency times margin times lifespan equals CLV, compared against CAC with the three x rule">
+        <style>
+          .cvT { font: 700 14px Inter, sans-serif; fill: #FFFFFF; }
+          .cvS { font: 400 11px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .cvK { font: 700 13px Inter, sans-serif; fill: #16232E; }
+          .cvX { font: 400 11.5px Inter, sans-serif; fill: #5E6E7A; }
+          .cvO { font: 700 20px Inter, sans-serif; fill: #5E6E7A; }
+          .cvG { font: 600 12.5px Inter, sans-serif; fill: #BE123C; }
+        </style>
+        <text class="cvK" x="30" y="34">The workhorse formula (one customer, worked)</text>
+        <rect x="30" y="50" width="150" height="64" rx="11" fill="#E3F2FC"/>
+        <text class="cvK" x="44" y="76">AOV $80</text>
+        <text class="cvX" x="44" y="94">avg order value</text>
+        <text class="cvO" x="192" y="90">×</text>
+        <rect x="216" y="50" width="150" height="64" rx="11" fill="#E3F2FC"/>
+        <text class="cvK" x="230" y="76">4 orders / yr</text>
+        <text class="cvX" x="230" y="94">purchase frequency</text>
+        <text class="cvO" x="378" y="90">×</text>
+        <rect x="402" y="50" width="130" height="64" rx="11" fill="#E3F2FC"/>
+        <text class="cvK" x="416" y="76">30% margin</text>
+        <text class="cvX" x="416" y="94">profit, not revenue</text>
+        <text class="cvO" x="544" y="90">×</text>
+        <rect x="568" y="50" width="130" height="64" rx="11" fill="#E3F2FC"/>
+        <text class="cvK" x="582" y="76">3 years</text>
+        <text class="cvX" x="582" y="94">expected lifespan</text>
+        <text class="cvO" x="710" y="90">=</text>
+        <rect x="734" y="50" width="124" height="64" rx="11" fill="#0C3B5C"/>
+        <text class="cvT" x="748" y="76">CLV $288</text>
+        <text class="cvS" x="748" y="94">lifetime profit</text>
+        <rect x="30" y="146" width="150" height="58" rx="11" fill="#A5D8F3"/>
+        <text class="cvK" x="44" y="170">CAC $95</text>
+        <text class="cvX" x="44" y="188" style="fill:#16232E">cost to acquire one</text>
+        <rect x="216" y="146" width="220" height="58" rx="11" fill="#BE123C"/>
+        <text class="cvT" x="230" y="170">CLV : CAC ≈ 3.0x</text>
+        <text class="cvS" x="230" y="188">healthy - the rule of thumb</text>
+        <text class="cvG" x="466" y="166">Under 1x: losing money on every customer</text>
+        <text class="cvG" x="466" y="184">Around 3x: healthy growth engine</text>
+        <text class="cvG" x="466" y="202">Way over 5x: maybe underinvesting in growth</text>
+        <text class="cvX" x="30" y="230">Payback period is the sibling question: how many months until a new customer repays their CAC?</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the CLV formula and the 3x rule; Apply-along 2 puts sliders on every box</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Historic, predictive, and the honest middle<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Historic CLV</strong> - what a cohort actually spent. True but backward-looking; your 2019 customers tell you about 2019.</li>
+          <li><strong>Predictive CLV</strong> - what customers WILL spend, modeled. Forward-looking but only as good as its assumptions.</li>
+          <li><strong>Cohort-based CLV - the honest middle.</strong> Track what each acquisition cohort spends over time (Session 5's curves) and project the curve forward gently. Most businesses should live here before buying anything fancier.</li>
+          <li><strong>Name-drop tier: BG/NBD + Gamma-Gamma</strong> (Fader &amp; Hardie) - the classic probabilistic models your DS team would reach for to predict who is still "alive" as a customer and what they will spend. Names to recognize, not math to learn.</li>
+          <li><strong>CLV:CAC with the 3x rule of thumb</strong> - and its sibling, payback period. Below 1x you lose money on every customer you win; hovering near 5x or above, you may be growing too timidly.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Harrah's casino built its Total Rewards program on CLV - and the data said something nobody expected:</strong> the glamorous high-rollers were not the most valuable customers. Mid-tier locals - teachers and retirees visiting weekly - out-valued them over a lifetime, and the entire marketing budget was reshaped around them: offers, comps, even floor layout. It became the flagship case in Davenport's <em>Competing on Analytics</em>, and the lesson generalizes: until you compute CLV, your gut is spending the budget on the wrong customers.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Product analytics: the product team's funnel + cohort toolkit<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Product teams run Sessions 5-7 thinking against the product itself. Three terms complete your vocabulary:</p>
+        <table class="clean">
+          <thead><tr><th>Metric</th><th>The question it answers</th><th>The exec use</th></tr></thead>
+          <tbody>
+            <tr><td>Activation</td><td>Did the new user reach the first moment of real value?</td><td>The retention lever that pays earliest - fix activation before buying ads</td></tr>
+            <tr><td>Feature adoption</td><td>Who actually uses the thing we shipped, and how often?</td><td>Kills the "we launched it so it worked" illusion in roadmap reviews</td></tr>
+            <tr><td>Path analysis</td><td>What routes do users actually take (versus the one we designed)?</td><td>Finds the detours and dead ends - the funnel's free-range cousin</td></tr>
+          </tbody>
+        </table>
+        <p>All three are funnels and cohorts wearing product clothes - you already know how to read them.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 1 of 3</span>
+      <h2>Run k-means with your own hands <span class="tag demo">★ 10 min · everyone clusters</span></h2>
+    </div>
+    <p class="lede">Sixty customers plotted on two axes: orders per year and average basket. You are the algorithm now - assign, move, repeat.</p>
+    <div class="widget" data-widget="kmeans" data-config='{}'></div>
+    <div class="steps">
+      <div class="step"><p>Look at the raw cloud first. Can you SEE groups before any algorithm runs? (Usually: sort of. That fuzziness is why we bother.)</p></div>
+      <div class="step"><p>Click <strong>assign</strong> - every customer joins its nearest pin. Then click <strong>move</strong> - each pin walks to the center of its crowd.</p></div>
+      <div class="step"><p>Alternate assign, move, assign, move until nothing changes. Count your rounds - convergence usually arrives embarrassingly fast.</p></div>
+      <div class="step"><p>Now the human part: name the three segments that emerged. In this data they are roughly bargain-occasional, frequent-regular, and big-basket-rare. Write one action per segment.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The debrief</strong>
+      The algorithm found the shape; YOU supplied the names and the actions. That division of labor is the whole story of applied ML - machines are magnificent at similarity and hopeless at meaning. A segment without a name and an action is just a colored blob.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 2 of 3</span>
+      <h2>Price a customer with the CLV calculator <span class="tag demo">★ 8 min · everyone prices</span></h2>
+    </div>
+    <p class="lede">Every slider is one lever of the workhorse formula. Watch which levers move the verdict - the answers surprise most rooms.</p>
+    <div class="widget" data-widget="clv" data-config='{}'></div>
+    <div class="steps">
+      <div class="step"><p>Read the baseline customer: AOV $80, 4 orders a year, 30% margin, 3-year lifespan, CAC $95. Check the verdict - roughly 3x, healthy.</p></div>
+      <div class="step"><p><strong>Challenge 1:</strong> marketing wants to double acquisition spend, pushing CAC to $150. Move the slider - is the engine still healthy?</p></div>
+      <div class="step"><p><strong>Challenge 2:</strong> instead, invest the same energy in retention and stretch lifespan from 3 years to 4. Compare the two end states side by side.</p></div>
+      <div class="step"><p>Say the conclusion out loud: which lever would you fund this quarter, and what would you tell the team that owns the other one?</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The debrief</strong>
+      Retention moves CLV linearly and quietly - an extra year of loyalty compounds without a press release. Acquisition cost moves the ratio loudly and immediately. The 3x rule keeps the argument honest: it converts "we should spend more on growth" from an opinion into an arithmetic claim anyone can check.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 3 of 3</span>
+      <h2>Segment reality check <span class="tag demo">★ 4 min · everyone audits</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><p>Write down the 3 customer segments your company ACTUALLY treats differently today - different offers, different service, different anything.</p></div>
+      <div class="step"><p>For each: is it defined by data (RFM scores, cluster membership) or by folklore ("enterprise means big logo")?</p></div>
+      <div class="step"><p>The uncomfortable test: if every segment gets the same email, you have zero real segments - and Session 5's RFM grid plus today's clustering is your gap list, in priority order.</p></div>
+      <div class="step"><p>Pick the one segment you would treat differently FIRST if the clusters existed, and note what the treatment would be. That is your ask for the data team.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">After the session</span>
+      <h2>This week <span class="tag exercise">◐ 25 min total</span></h2>
+    </div>
+    <ul>
+      <li><strong>Finish the segment reality check</strong> from Apply-along 3 and share it with whoever owns marketing - the same-email test starts good arguments.</li>
+      <li><strong>Ask your team for CLV by acquisition cohort</strong> - even a rough historic version. If the answer is "we don't compute that", you have found this quarter's cheapest high-leverage project.</li>
+      <li><strong>Read the self-study card</strong> above: activation, feature adoption and path analysis - fifteen minutes that makes every product review legible.</li>
+      <li><strong>Optional deep end:</strong> Davenport, <em>Competing on Analytics</em> (the Harrah's chapters), and Fader's <em>Customer Centricity</em> for the CLV worldview in full.</li>
+    </ul>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · What does k-means need from a human being before its clusters are worth anything?</p>
+      <button class="qopt" type="button">A · Nothing - it is unsupervised, so it runs and delivers segments automatically</button>
+      <button class="qopt" type="button">B · Labeled examples of each segment so it knows what to look for</button>
+      <button class="qopt" type="button">C · Someone to choose k, name the groups it finds, and decide the action per group - the algorithm only finds shapes</button>
+      <p class="qwhy">Unsupervised means no labels needed - not no humans needed. Choosing k is a judgment call, and a cluster without a name and an action is noise. The algorithm finds similarity; meaning is your department.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · "Great, my flight is delayed again." Why does basic sentiment analysis misread this tweet?</p>
+      <button class="qopt" type="button">A · Word-counting sees "great" as positive - sarcasm needs context that lexicons and bag-of-words cannot see</button>
+      <button class="qopt" type="button">B · The tweet is too short for any algorithm to score</button>
+      <button class="qopt" type="button">C · Airline names confuse the sentiment dictionary</button>
+      <p class="qwhy">Lexicon and bag-of-words methods count words without reading meaning, so sarcasm, negation and context defeat them. They remain great for triage at scale - and that failure line is where the AI literacy course begins.</p>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · Your CLV:CAC ratio comes back at 0.8. What is the data telling you?</p>
+      <button class="qopt" type="button">A · Healthy - anything under 1 means acquisition is efficient</button>
+      <button class="qopt" type="button">B · Every new customer costs more to acquire than they will ever return in lifetime profit - growth is burning money</button>
+      <button class="qopt" type="button">C · Nothing yet - the ratio only matters above 5</button>
+      <p class="qwhy">Below 1x, each acquired customer is a small loss you then scale with the marketing budget. The rule of thumb: ~3x is healthy; far above 5x may mean you are underinvesting in growth you could afford.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Concepts covered &amp; their origins</h2>
+    </div>
+    <p class="lede">The working 80% of each idea, credited to its canon - the deep end stays optional and the boundary stays honest.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">k-means clustering</span><span class="note">the four-move loop, choosing k, nameable-and-actionable test - Part 1 + Apply-along 1</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Hierarchical clustering</span><span class="note">one-liner: the dendrogram family tree, cut where you like</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">RFM × clustering</span><span class="note">Session 5's scores as inputs; rules give the grid, clustering finds the shapes - Part 1</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Sentiment analysis basics</span><span class="note">lexicon → bag-of-words + naive bayes; sarcasm as the honest limit - Part 2</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">CLV: formula + cohort method</span><span class="note">AOV × frequency × margin × lifespan; CLV:CAC 3x rule - Part 3 + Apply-along 2</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">BG/NBD + Gamma-Gamma (Fader &amp; Hardie)</span><span class="note">names only - the probabilistic CLV models your DS team would use</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Product analytics</span><span class="note">activation, feature adoption, path analysis - self-study card</span></div>
+      <div class="covered-row"><span class="status pill light">✗</span><span class="name">Recommendations &amp; search ranking</span><span class="note">not covered by design - that is the future AI literacy course</span></div>
+    </div>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 7 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>k-means recipe</b><span>Drop k pins → assign each point to nearest → move pins to their center → repeat until still. The whole algorithm, no math required.</span></div>
+      <div class="cheat-item"><b>Choosing k</b><span>Elbow method hints; management decides. Every segment must be nameable and actionable or it is noise - if you cannot brief it in one sentence, merge it.</span></div>
+      <div class="cheat-item"><b>The division of labor</b><span>Algorithms find shapes; humans name them and act. RFM rules give the grid you designed; clustering finds the pockets you did not think to look for.</span></div>
+      <div class="cheat-item"><b>Sentiment recipe + limit</b><span>Lexicon → bag-of-words + naive bayes. Great for triaging thousands of reviews by theme; breaks on sarcasm and context - that is the AI course's turf.</span></div>
+      <div class="cheat-item"><b>CLV workhorse</b><span>CLV = AOV × frequency × margin × lifespan. Historic looks back, predictive guesses, cohort-based is the honest middle. BG/NBD + Gamma-Gamma = the fancy names.</span></div>
+      <div class="cheat-item"><b>CLV:CAC</b><span>Under 1x = losing money per customer. ~3x = healthy. Far over 5x = maybe underinvesting. Retention moves CLV quietly; CAC moves the ratio loudly.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 7 of 8 · learn-data-literacy-with-phoebe · by Phoebe Fu</span>
+    <span><a href="06-ml-basics-predict.html">← ML basics I: predict</a> &nbsp;·&nbsp; <a href="../index.html">All sessions</a> &nbsp;·&nbsp; <a href="08-dashboard-to-decision.html">Next: From dashboard to decision →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=4"></script>
+<script src="../assets/widgets.js?v=4"></script>
+</body>
+</html>

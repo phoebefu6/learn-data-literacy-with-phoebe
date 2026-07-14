@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 1 · Think in data - learn data literacy with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=4">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-data-literacy-with-phoebe</a> / Session 1 of 8</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Data Literacy with Phoebe · Session 1 of 8</div>
+    <h1>Think in data: <span class="accent">from numbers to decisions</span></h1>
+    <p class="sub">The mental model under this whole course: what data actually is, how it climbs the ladder to become a decision, and how real analytics projects run. No tools, no code - just the thinking that separates leaders who use data from leaders who get used by it.</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Foundation</span>
+      <span class="chip audience">Execs &amp; business leaders</span>
+      <span class="chip audience">No prep needed</span>
+      <span class="chip time">45 min live + self-study</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:3">3-18 · Concepts</span>
+      <span class="a3" style="flex:5">18-40 · Apply-along</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this course exists</h2>
+    </div>
+    <p class="lede">Every week someone slides a dashboard across the table and asks you to decide. Data literacy is not learning to code - it is knowing what that dashboard can and cannot tell you, which question to ask next, and when to push back. Over 8 sessions you will learn the language of data, the machinery behind it, the metrics that run internet, SaaS and e-commerce businesses, and just enough machine learning to be dangerous in the right way. Each session uses a real company story and a hands-on interactive exercise - no code anywhere.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill amber">★ Apply-along - interactive, everyone plays</span>
+      <span class="pill inkpill">Real cases: Moneyball, Amazon, Tesco &amp; more</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Three lenses you will use every working day: the four data types (and why the distinction matters at the board table), the data-to-action ladder that turns numbers into decisions, and the 7-step lifecycle every analytics project follows - so you know exactly where yours is stuck.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: DATA TYPES ============ -->
+  <section class="section" id="data-types">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · the raw material</span>
+      <h2>What data actually is <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">"Data" covers your ERP tables, last quarter's NPS free-text, and the security camera feed in the warehouse. Those are wildly different materials, and they cost wildly different amounts to turn into decisions. Two carves matter: how structured it is, and what kind of measurement it holds.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Data types: structured, semi-structured, unstructured columns with examples, plus measurement levels below">
+        <style>
+          .dtT { font: 700 14px Inter, sans-serif; fill: #FFFFFF; }
+          .dtS { font: 400 12px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .dtH { font: 700 15px Inter, sans-serif; fill: #16232E; }
+          .dtX { font: 400 12.5px Inter, sans-serif; fill: #5E6E7A; }
+          .dtN { font: 600 12px Inter, sans-serif; fill: #BE123C; }
+        </style>
+        <text class="dtH" x="40" y="32">Carve 1 · How structured?</text>
+        <rect x="40" y="48" width="255" height="88" rx="12" fill="#0C3B5C"/>
+        <text class="dtT" x="56" y="74">Structured</text>
+        <text class="dtS" x="56" y="94">rows &amp; columns: orders, invoices,</text>
+        <text class="dtS" x="56" y="111">CRM fields - cheap to analyze</text>
+        <rect x="312" y="48" width="255" height="88" rx="12" fill="#14699C"/>
+        <text class="dtT" x="328" y="74">Semi-structured</text>
+        <text class="dtS" x="328" y="94">JSON events, emails with fields,</text>
+        <text class="dtS" x="328" y="111">web logs - needs shaping first</text>
+        <rect x="584" y="48" width="255" height="88" rx="12" fill="#2E9BD6"/>
+        <text class="dtT" x="600" y="74">Unstructured</text>
+        <text class="dtS" x="600" y="94">review text, call audio, images -</text>
+        <text class="dtS" x="600" y="111">~80% of company data, hardest</text>
+        <text class="dtH" x="40" y="180">Carve 2 · What kind of measurement?</text>
+        <rect x="40" y="196" width="190" height="64" rx="10" fill="#E3F2FC"/>
+        <text class="dtH" x="54" y="220" style="font-size:13.5px">Nominal</text>
+        <text class="dtX" x="54" y="240">categories: region, channel</text>
+        <rect x="243" y="196" width="190" height="64" rx="10" fill="#E3F2FC"/>
+        <text class="dtH" x="257" y="220" style="font-size:13.5px">Ordinal</text>
+        <text class="dtX" x="257" y="240">ranked: NPS 1-5, seat tier</text>
+        <rect x="446" y="196" width="190" height="64" rx="10" fill="#E3F2FC"/>
+        <text class="dtH" x="460" y="220" style="font-size:13.5px">Interval</text>
+        <text class="dtX" x="460" y="240">even steps, no true zero: dates</text>
+        <rect x="649" y="196" width="190" height="64" rx="10" fill="#E3F2FC"/>
+        <text class="dtH" x="663" y="220" style="font-size:13.5px">Ratio</text>
+        <text class="dtX" x="663" y="240">true zero: revenue, units, time</text>
+        <text class="dtN" x="40" y="290">Why you care: averaging NPS categories is bad math · "2x revenue" makes sense (ratio), "2x satisfaction" does not (ordinal)</text>
+        <text class="dtX" x="40" y="310">Rule of thumb: the less structure, the more cost between you and an answer. Budget accordingly.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - two carves that price every data request you will ever make</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Structured, semi-structured, unstructured<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Structure decides cost and speed. When you ask "can we analyze what customers complain about?", you are asking someone to turn unstructured text into structured categories first - that is real work, and knowing it buys you realistic timelines.</p>
+        <ul>
+          <li><strong>Structured</strong> - already rows and columns. Orders, payments, inventory. An analyst answers questions about it in hours.</li>
+          <li><strong>Semi-structured</strong> - has labels but not a fixed table: app events, JSON payloads, emails. Days, not hours.</li>
+          <li><strong>Unstructured</strong> - text, audio, images. Most of what a company stores, least of what it uses. Session 7 shows the basic trick (sentiment analysis); the fancy tricks are the AI literacy course.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Moneyball started as a structure advantage:</strong> the 2002 Oakland A's could not outspend the Yankees, so they out-analyzed them - decades of structured play-by-play stats revealed that on-base percentage, not batting average, predicted runs. The insight was sitting in tables everyone already had. Same data, better question, playoff run on one-third the payroll.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The four measurement levels, and the mistakes they prevent<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Nominal, ordinal, interval, ratio - a 1946 psychology paper (Stevens) that still decides which math is legal on which column.</p>
+        <table class="clean">
+          <thead><tr><th>Level</th><th>Example</th><th>Legal math</th><th>Classic mistake</th></tr></thead>
+          <tbody>
+            <tr><td>Nominal</td><td>region, payment method</td><td>counts, mode</td><td>"average region" - meaningless</td></tr>
+            <tr><td>Ordinal</td><td>NPS bucket, support tier</td><td>median, ranking</td><td>averaging 1-5 ratings as if the gaps were equal</td></tr>
+            <tr><td>Interval</td><td>dates, temperature</td><td>differences</td><td>"March is twice February" - no true zero</td></tr>
+            <tr><td>Ratio</td><td>revenue, units, duration</td><td>everything incl. ratios</td><td>rare - this one is safe</td></tr>
+          </tbody>
+        </table>
+        <p>The exec takeaway: when a slide averages an ordinal scale ("satisfaction is 3.7"), treat it as a rough signal, not arithmetic truth - and feel free to say so.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: THE LADDER ============ -->
+  <section class="section" id="ladder">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · the climb that pays</span>
+      <h2>Data → information → insight → action <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Data has zero value until it changes a decision. The ladder is the whole business case for analytics in four rungs - and the reason most dashboards disappoint: they stop at rung two.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ascending ladder from data to information to insight to action, each rung with a definition and the cart abandonment example">
+        <style>
+          .laT { font: 700 14px Inter, sans-serif; fill: #FFFFFF; }
+          .laS { font: 400 11.5px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .laX { font: 400 12.5px Inter, sans-serif; fill: #5E6E7A; }
+          .laQ { font: 600 12px Inter, sans-serif; fill: #BE123C; }
+          .laA { stroke: #C3CFD8; stroke-width: 2.5; fill: none; marker-end: url(#laAh); }
+        </style>
+        <defs>
+          <marker id="laAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#C3CFD8" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="30" y="240" width="195" height="66" rx="12" fill="#2E9BD6"/>
+        <text class="laT" x="46" y="266">Data</text>
+        <text class="laS" x="46" y="284">50,000 raw checkout events,</text>
+        <text class="laS" x="46" y="298">one row each</text>
+        <line class="laA" x1="225" y1="262" x2="248" y2="220"/>
+        <rect x="240" y="168" width="195" height="66" rx="12" fill="#14699C"/>
+        <text class="laT" x="256" y="194">Information</text>
+        <text class="laS" x="256" y="212">"cart abandonment was 71%</text>
+        <text class="laS" x="256" y="226">last month" - summarized</text>
+        <line class="laA" x1="435" y1="190" x2="458" y2="148"/>
+        <rect x="450" y="96" width="195" height="66" rx="12" fill="#0C3B5C"/>
+        <text class="laT" x="466" y="122">Insight</text>
+        <text class="laS" x="466" y="140">"abandonment hits 84% when</text>
+        <text class="laS" x="466" y="154">shipping cost appears late"</text>
+        <line class="laA" x1="645" y1="118" x2="668" y2="76"/>
+        <rect x="660" y="24" width="195" height="66" rx="12" fill="#BE123C"/>
+        <text class="laT" x="676" y="50">Action</text>
+        <text class="laS" x="676" y="68">show shipping on product page;</text>
+        <text class="laS" x="676" y="82">re-measure in 4 weeks</text>
+        <text class="laQ" x="30" y="150">The test between every rung:</text>
+        <text class="laQ" x="30" y="170">"So what?" - if a slide cannot</text>
+        <text class="laQ" x="30" y="190">answer it, it has not climbed.</text>
+        <text class="laX" x="240" y="290">Dashboards live on rung 2. Analysts earn salaries on rung 3. Leaders earn theirs on rung 4.</text>
+        <text class="laX" x="240" y="310">Value only exists at the top: no action, no return - however pretty the chart.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the ladder, walked by one e-commerce example</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Climbing the ladder (and where climbs stall)<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Data → information:</strong> aggregation. Counting, averaging, grouping. Machines do this well - it is the cheap rung.</li>
+          <li><strong>Information → insight:</strong> comparison and surprise. An insight is information that changes what you believe: a segment that behaves differently, a trend that broke, a cause behind a number. This rung needs a human question.</li>
+          <li><strong>Insight → action:</strong> a decision with an owner and a date. The most skipped rung in corporate life - meetings end at "interesting" instead of "therefore".</li>
+          <li><strong>The loop-back:</strong> every action creates new data. Session 8 turns this into a management routine.</li>
+        </ul>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          When shown any chart, ask the ladder question: "What does this change?" You will be amazed how often the honest answer is "nothing" - and how fast your meetings improve once that answer becomes unacceptable.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>When data climbs too far: the Target lesson<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The ladder has a guardrail. In 2012, Target's statisticians built a pregnancy-prediction score from shopping patterns (unscented lotion, supplements, cotton balls) and mailed baby coupons - famously reaching a teenager before her father knew. The analytics worked perfectly; the action was the failure. Data literacy includes rung-4 judgment: <strong>just because data supports an action does not mean the action is wise, legal, or kind.</strong> Ask "how would this feel published on the front page?" before shipping the campaign.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: LIFECYCLE ============ -->
+  <section class="section" id="lifecycle">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · how the work actually runs</span>
+      <h2>The analytics project lifecycle <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Every analytics project - a churn study, a pricing review, an ML model - walks the same seven steps. Industry calls the formal version CRISP-DM; you just need the plain-language loop, because the step that fails is almost never the math.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Seven step analytics lifecycle loop from business question through data, cleaning, analysis, insight, action, measurement, looping back">
+        <style>
+          .lcT { font: 700 13px Inter, sans-serif; fill: #FFFFFF; }
+          .lcS { font: 400 11px Inter, sans-serif; fill: #FFFFFF; opacity: .88; }
+          .lcX { font: 400 12.5px Inter, sans-serif; fill: #5E6E7A; }
+          .lcW { font: 600 12px Inter, sans-serif; fill: #B42318; }
+          .lcA { stroke: #C3CFD8; stroke-width: 2.5; fill: none; marker-end: url(#lcAh); }
+        </style>
+        <defs>
+          <marker id="lcAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#C3CFD8" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="30" y="40" width="185" height="58" rx="11" fill="#0C3B5C"/>
+        <text class="lcT" x="44" y="64">1 · Business question</text>
+        <text class="lcS" x="44" y="82">"why did Q3 margin slip?"</text>
+        <rect x="245" y="40" width="185" height="58" rx="11" fill="#14699C"/>
+        <text class="lcT" x="259" y="64">2 · Get the data</text>
+        <text class="lcS" x="259" y="82">find it, request it, join it</text>
+        <rect x="460" y="40" width="185" height="58" rx="11" fill="#14699C"/>
+        <text class="lcT" x="474" y="64">3 · Clean &amp; prepare</text>
+        <text class="lcS" x="474" y="82">~60-80% of project time</text>
+        <rect x="675" y="40" width="180" height="58" rx="11" fill="#14699C"/>
+        <text class="lcT" x="689" y="64">4 · Analyze / model</text>
+        <text class="lcS" x="689" y="82">EDA, stats, maybe ML</text>
+        <rect x="675" y="180" width="180" height="58" rx="11" fill="#2E9BD6"/>
+        <text class="lcT" x="689" y="204">5 · Insight</text>
+        <text class="lcS" x="689" y="222">the "therefore" sentence</text>
+        <rect x="460" y="180" width="185" height="58" rx="11" fill="#BE123C"/>
+        <text class="lcT" x="474" y="204">6 · Act</text>
+        <text class="lcS" x="474" y="222">decision, owner, date</text>
+        <rect x="245" y="180" width="185" height="58" rx="11" fill="#BE123C"/>
+        <text class="lcT" x="259" y="204">7 · Measure impact</text>
+        <text class="lcS" x="259" y="222">did the needle move?</text>
+        <line class="lcA" x1="215" y1="69" x2="240" y2="69"/>
+        <line class="lcA" x1="430" y1="69" x2="455" y2="69"/>
+        <line class="lcA" x1="645" y1="69" x2="670" y2="69"/>
+        <line class="lcA" x1="765" y1="98" x2="765" y2="175"/>
+        <line class="lcA" x1="670" y1="209" x2="650" y2="209"/>
+        <line class="lcA" x1="455" y1="209" x2="435" y2="209"/>
+        <line class="lcA" x1="245" y1="209" x2="150" y2="209"/>
+        <line class="lcA" x1="122" y1="209" x2="122" y2="103"/>
+        <text class="lcX" x="150" y="230">loop: new questions</text>
+        <text class="lcW" x="30" y="270">Where projects really die: step 1 (vague question), step 3 (dirty data nobody budgeted for), step 6 (insight lands, nobody owns the action).</text>
+        <text class="lcX" x="30" y="290">The math in step 4 is almost never the problem. Fund steps 1, 3 and 6 like the bottlenecks they are.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - seven steps, three classic failure points, one loop</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Where to spend YOUR attention as a leader<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Step 1 is yours.</strong> "Look into churn" produces a wandering month. "Which customer segments churned most last quarter, and what did they have in common?" produces an answer. Sharp questions are the cheapest analytics investment that exists.</li>
+          <li><strong>Step 3 explains the timeline.</strong> Cleaning and joining data is 60-80% of real project time - the famous, unglamorous truth. When an analyst says "two weeks", this is where it goes.</li>
+          <li><strong>Step 6 is where ROI lives or dies.</strong> An insight without an owner and a date is a screensaver. End every readout by assigning both.</li>
+          <li><strong>Step 7 closes the loop:</strong> the action you took becomes the next experiment. That habit - act, measure, adjust - IS a data culture; everything else is decoration.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>The A's again, one level up:</strong> Moneyball was not one insight but a lifecycle on repeat - question (undervalued skills?), data (play-by-play history), analysis (OBP wins games), action (sign the walkers nobody wanted), measure (wins per dollar), new question. Twenty years later every major sports franchise runs this loop as a department.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The cast: who does what in a data team<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <thead><tr><th>Role</th><th>Owns</th><th>Ask them for</th></tr></thead>
+          <tbody>
+            <tr><td>Data engineer (DE)</td><td>pipelines, the plumbing (Session 2)</td><td>"can we get this data flowing reliably?"</td></tr>
+            <tr><td>Data analyst (DA)</td><td>steps 2-5: queries, EDA, dashboards</td><td>"what happened, where, to whom?"</td></tr>
+            <tr><td>Data scientist (DS)</td><td>step 4 heavy lifting: models, forecasts (Sessions 6-7)</td><td>"what will happen? what drives it?"</td></tr>
+            <tr><td>BI / analytics engineer</td><td>metrics layer, self-serve dashboards (Sessions 4-5)</td><td>"one agreed number everyone trusts"</td></tr>
+          </tbody>
+        </table>
+        <p>Small companies collapse all four into one heroic human. Knowing the hats exist keeps your requests fair - and tells you who is missing when everything feels slow.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 1 of 3</span>
+      <h2>Inventory your own data <span class="tag demo">★ 6 min · everyone lists</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><p>Two minutes solo: list 5 data assets your business touches every week (order table, support tickets, reviews, web traffic, payroll - anything).</p></div>
+      <div class="step"><p>Tag each one: structured, semi-structured, or unstructured. Then tag the measurement level of its key column (nominal / ordinal / interval / ratio).</p></div>
+      <div class="step"><p>Compare with a neighbor: which of your ten combined assets is the most valuable AND least used? (Almost every pair finds one - usually unstructured review or support text.)</p></div>
+      <div class="step"><p>Keep the list. Session 2 asks where each asset physically lives; Session 7 shows what basic ML squeezes out of the text ones.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 2 of 3</span>
+      <h2>Climb the ladder yourself <span class="tag demo">★ 8 min · everyone sorts</span></h2>
+    </div>
+    <p class="lede">Six statements from one e-commerce company. Place each on its rung. The distinctions feel obvious until statement four.</p>
+    <div class="widget" data-widget="sorter" data-config='{
+      "title": "★ Data, information, insight, or action?",
+      "intro": "Click the rung each statement belongs to. Green = placed correctly.",
+      "categories": ["Data", "Information", "Insight", "Action"],
+      "items": [
+        {"t": "A CSV of 50,000 individual checkout events, one row per click.", "c": 0, "why": "raw and unaggregated - nobody can decide anything from rows"},
+        {"t": "Average checkout time is 3.4 minutes, up from 2.9 last quarter.", "c": 1, "why": "summarized and true, but no so-what yet"},
+        {"t": "Checkout time doubled ONLY for customers paying with the new wallet - the integration is slowing them down.", "c": 2, "why": "a comparison that changes what you believe and points at a cause"},
+        {"t": "Roll back the wallet integration this week and re-measure checkout time in 14 days.", "c": 3, "why": "decision + owner + date + a loop back to measurement"},
+        {"t": "Raw server logs from Black Friday weekend, 40 GB.", "c": 0, "why": "volume is not value - still rung one"},
+        {"t": "Mobile is now 64% of all visits.", "c": 1, "why": "a clean summary - it only becomes insight when paired with a consequence"}
+      ]}'></div>
+    <div class="callout tip">
+      <strong>The debrief question</strong>
+      Look at your own weekly reports: how many lines are rung 2 (information) dressed as rung 3 (insight)? The fix is one added sentence: "which means we should...".
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 3 of 3</span>
+      <h2>Autopsy one real decision <span class="tag demo">★ 8 min · everyone maps</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><p>Pick a decision your company made in the last quarter that involved data (a price change, a campaign, a hire, a kill).</p></div>
+      <div class="step"><p>Walk it through the 7 steps: what was the question? what data? who cleaned it? what analysis? what was the insight sentence? who owned the action? and the honest one - <strong>did anyone measure the impact afterward?</strong></p></div>
+      <div class="step"><p>Mark where the walk broke down. In most rooms, 70%+ break at step 1 (no sharp question) or step 7 (no follow-up measurement).</p></div>
+      <div class="step"><p>Write one sentence you will say at the next such meeting to fix your broken step. That sentence is today's real deliverable.</p></div>
+    </div>
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p>Amazon institutionalized step 7 as the Weekly Business Review: every important action becomes a metric someone re-reads next week, out loud, against expectations. Session 8 builds you a lightweight version.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">After the session</span>
+      <h2>This week <span class="tag exercise">◐ 25 min total</span></h2>
+    </div>
+    <ul>
+      <li><strong>Run the ladder test in one real meeting:</strong> for each chart shown, silently ask "what does this change?". Count how many survive. Report your number next session - the room average is usually under half.</li>
+      <li><strong>Finish your data inventory</strong> from Apply-along 1: 10 assets, tagged by structure and measurement level.</li>
+      <li><strong>Read the self-study cards</strong> above: measurement levels, the Target lesson, and the data-team roles.</li>
+      <li><strong>Optional deep end:</strong> Provost &amp; Fawcett, <em>Data Science for Business</em>, chapter 1 - the best 30 pages ever written on data thinking for non-engineers.</li>
+    </ul>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · "Customer satisfaction averages 3.7 on our 1-5 survey." What should a data-literate leader flag?</p>
+      <button class="qopt" type="button">A · Nothing - 3.7 is a solid score</button>
+      <button class="qopt" type="button">B · A 1-5 rating is ordinal - averaging it treats unequal gaps as equal, so use it as a rough signal, not arithmetic truth</button>
+      <button class="qopt" type="button">C · The survey sample is too small to say anything</button>
+      <p class="qwhy">Ordinal scales rank, they do not measure distance. The gap between "4" and "5" may be a chasm while "2" to "3" is a shrug. Medians and distributions tell the honest story.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · "Cart abandonment was 71% last month" is on which rung of the ladder?</p>
+      <button class="qopt" type="button">A · Data - it came from the tracking system</button>
+      <button class="qopt" type="button">B · Insight - 71% is alarmingly high</button>
+      <button class="qopt" type="button">C · Information - summarized and true, but it does not yet change what anyone believes or does</button>
+      <p class="qwhy">Aggregation makes information. It becomes insight only when a comparison adds a "because" or a "which means" - like the shipping-cost finding.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Your analyst says the churn study needs three weeks and you are surprised. Where is most of that time statistically going?</p>
+      <button class="qopt" type="button">A · Cleaning and preparing the data - typically 60-80% of any analytics project</button>
+      <button class="qopt" type="button">B · Running the statistical models</button>
+      <button class="qopt" type="button">C · Making the slides look good</button>
+      <p class="qwhy">The unglamorous truth of the lifecycle: joining, deduplicating and fixing data dwarfs the analysis itself. Fund the plumbing (Session 2) and the three weeks becomes one.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Concepts covered &amp; their origins</h2>
+    </div>
+    <p class="lede">This course teaches the working 80% of each idea and credits the canon - the books and papers stay the deep end for anyone who wants more.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Data types: structure carve</span><span class="note">structured / semi / unstructured - Part 1 + Apply-along 1</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Measurement levels (Stevens, 1946)</span><span class="note">nominal / ordinal / interval / ratio + the legal-math table - Part 1</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Data → information → insight → action (DIKW tradition)</span><span class="note">the ladder, the so-what test - Part 2 + Apply-along 2</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Analytics lifecycle (CRISP-DM, 1996, plain-language)</span><span class="note">7 steps, 3 failure points - Part 3 + Apply-along 3</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Data team roles</span><span class="note">self-study card - DE returns in Session 2, DS in Sessions 6-7</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Responsible use (the Target case)</span><span class="note">self-study guardrail - full ethics treatment deferred to the AI literacy course</span></div>
+    </div>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 1 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Structure = cost</b><span>Structured answers in hours, semi-structured in days, unstructured needs real investment. ~80% of company data is unstructured and unused.</span></div>
+      <div class="cheat-item"><b>Measurement levels</b><span>Nominal (categories) · ordinal (ranks - do not average!) · interval (no true zero) · ratio (safe for all math).</span></div>
+      <div class="cheat-item"><b>The ladder</b><span>Data → information → insight → action. Test every rung with "so what?". Value exists only at the top.</span></div>
+      <div class="cheat-item"><b>The exec question</b><span>"What does this chart change?" - ask it of every slide. Information dressed as insight dies on contact with it.</span></div>
+      <div class="cheat-item"><b>7-step lifecycle</b><span>Question → get data → clean (60-80% of time!) → analyze → insight → act (owner + date) → measure. Projects die at 1, 3 and 6.</span></div>
+      <div class="cheat-item"><b>Your rungs</b><span>Step 1 (sharp questions) and step 6 (owned actions) belong to leaders, not analysts. Fund step 3 without complaining.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 1 of 8 · learn-data-literacy-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="02-where-data-lives.html">Next: Where data lives →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=4"></script>
+<script src="../assets/widgets.js?v=4"></script>
+</body>
+</html>

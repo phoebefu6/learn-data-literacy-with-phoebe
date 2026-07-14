@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 6 · ML basics I: predict numbers and labels - learn data literacy with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=4">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-data-literacy-with-phoebe</a> / Session 6 of 8</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Data Literacy with Phoebe · Session 6 of 8</div>
+    <h1>ML basics I: <span class="accent">predict numbers and labels</span></h1>
+    <p class="sub">Machine learning without the math. What supervised learning actually is, how sales forecasts and churn scores get made, and the two judgment calls that never leave YOUR desk: which scorecard to trust and where to set the threshold. You will never train a model - you will judge one, which is the harder job.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Stretch</span>
+      <span class="chip audience">Execs &amp; business leaders</span>
+      <span class="chip audience">Builds on Sessions 3-4</span>
+      <span class="chip time">45 min live + self-study</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:3">3-19 · Concepts</span>
+      <span class="a3" style="flex:5">19-41 · Apply-along</span>
+      <span class="a4" style="flex:1">41-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this session exists</h2>
+    </div>
+    <p class="lede">Someone on your team will soon say "the model predicts...". This session makes sure you know what that sentence means, what it hides, and which decisions it quietly hands back to you. We cover the classic prediction toolbox - forecasting numbers and classifying labels - at executive intuition level: models as named tools with when-they-win, zero math, zero code. One honest boundary: deep learning, recommendations, search and GenAI are out of scope by design - they get their own AI literacy course later.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill amber">★ Apply-along - interactive, everyone plays</span>
+      <span class="pill inkpill">Real cases: Walmart forecasting, telco churn</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Three working instincts: the overfitting test (has this model seen the exam, or just memorized the textbook?), the forecast scorecard (trend + seasonality, judged by MAPE), and the one that pays your salary - the churn threshold is a business decision about precision and recall, not a data science decision.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: SUPERVISED LEARNING ============ -->
+  <section class="section" id="supervised">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · the core idea</span>
+      <h2>What supervised learning actually is <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Supervised learning is learning from labeled history to predict the next case. Show a model thousands of past customers WITH the answer attached (churned or stayed, and what they bought before), and it learns the pattern well enough to score the customers whose answer you do not know yet. Everything in this session is a variation on that one move.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two panels of the same scatter data: left a sensible smooth line that learns the pattern, right an absurd wiggly line through every point that memorizes the noise">
+        <style>
+          .ovH { font: 700 14px Inter, sans-serif; fill: #16232E; }
+          .ovX { font: 400 12.5px Inter, sans-serif; fill: #5E6E7A; }
+          .ovG { font: 600 12.5px Inter, sans-serif; fill: #BE123C; }
+          .ovB { font: 600 12.5px Inter, sans-serif; fill: #B42318; }
+          .ovP { fill: #14699C; }
+        </style>
+        <text class="ovH" x="40" y="34">Model A · learns the pattern</text>
+        <rect x="40" y="48" width="380" height="190" rx="12" fill="#E3F2FC"/>
+        <circle class="ovP" cx="75" cy="210" r="5"/><circle class="ovP" cx="110" cy="192" r="5"/>
+        <circle class="ovP" cx="145" cy="200" r="5"/><circle class="ovP" cx="180" cy="172" r="5"/>
+        <circle class="ovP" cx="215" cy="158" r="5"/><circle class="ovP" cx="250" cy="168" r="5"/>
+        <circle class="ovP" cx="285" cy="138" r="5"/><circle class="ovP" cx="320" cy="148" r="5"/>
+        <circle class="ovP" cx="355" cy="120" r="5"/><circle class="ovP" cx="390" cy="104" r="5"/>
+        <path d="M60,218 C160,196 280,160 405,98" fill="none" stroke="#BE123C" stroke-width="3"/>
+        <text class="ovG" x="40" y="262">Smooth line, misses a few points on purpose</text>
+        <text class="ovH" x="480" y="34">Model B · memorizes the noise</text>
+        <rect x="480" y="48" width="380" height="190" rx="12" fill="#E3F2FC"/>
+        <circle class="ovP" cx="515" cy="210" r="5"/><circle class="ovP" cx="550" cy="192" r="5"/>
+        <circle class="ovP" cx="585" cy="200" r="5"/><circle class="ovP" cx="620" cy="172" r="5"/>
+        <circle class="ovP" cx="655" cy="158" r="5"/><circle class="ovP" cx="690" cy="168" r="5"/>
+        <circle class="ovP" cx="725" cy="138" r="5"/><circle class="ovP" cx="760" cy="148" r="5"/>
+        <circle class="ovP" cx="795" cy="120" r="5"/><circle class="ovP" cx="830" cy="104" r="5"/>
+        <polyline points="500,225 515,210 550,192 585,200 620,172 655,158 690,168 725,138 760,148 795,120 830,104"
+          fill="none" stroke="#B42318" stroke-width="3"/>
+        <text class="ovB" x="480" y="262">Hits every point, learns nothing reusable</text>
+        <text class="ovX" x="40" y="290">Both fit history perfectly well. Only Model A survives the exam it has not seen - new data. B is overfitting.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - overfitting in one picture: the wiggly line is a straight-A student who only memorized</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Numbers, labels, and the exam the model has not seen<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Two kinds of question, two kinds of model - that is the whole taxonomy you need today:</p>
+        <ul>
+          <li><strong>Predict a NUMBER</strong> - regression. "What will next month's sales be?" "How many units will store 44 need?" Part 2 is this.</li>
+          <li><strong>Predict a LABEL</strong> - classification. "Will this customer churn - yes or no?" "Will this delivery be late?" Part 3 is this.</li>
+          <li><strong>Train/test split</strong> - the honesty mechanism. The team trains the model on, say, 80% of history and grades it on the 20% it never saw. That held-out chunk is the exam. A model graded only on data it trained on is a student grading their own homework.</li>
+          <li><strong>Overfitting</strong> - memorizing the textbook and failing the exam. The wiggly line above chases every random bump in history; it looks brilliant in the meeting and falls apart in production. The tell: great training score, mediocre test score.</li>
+        </ul>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          One question exposes 90% of ML overclaiming: "how does it score on data it has never seen?" If the answer is a training-set number, or a shrug, you have found the wiggly line.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The data is the model<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The dirty secret of applied ML: the algorithm choice matters far less than the labels you feed it. Garbage labels in, garbage predictions out - forever, at scale, with confidence.</p>
+        <ul>
+          <li><strong>The label IS a business decision.</strong> "Churn" is not a fact of nature. Is a customer churned after 30 days of silence? 90? After their contract lapses? Each definition produces a different model, a different call list, and a different budget. The data scientist will pick one if you do not - and theirs will be the convenient one, not the profitable one.</li>
+          <li><strong>Leaky labels flatter.</strong> If "cancelled auto-renew" sneaks into the training features, the model "predicts" churn brilliantly - by reading the answer off the exam sheet. Impossible-looking accuracy deserves suspicion, not applause.</li>
+          <li><strong>Old labels drift.</strong> A churn model trained on pre-price-change customers quietly rots after the price change. Ask when it was last retrained.</li>
+        </ul>
+        <p>The exec takeaway: spend your meeting time on the label definition, not the algorithm name. That is the part you are qualified to own - and the part that moves the money.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: FORECASTING ============ -->
+  <section class="section" id="forecasting">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · predicting numbers</span>
+      <h2>Forecasting: predicting numbers <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Every forecast your team will ever show you is the same sandwich: a base level, a trend (drifting up or down), a seasonality (the repeating rhythm of weeks and holidays), and noise - the wiggle you accept instead of chasing. Decompose any forecast into those four and you can interrogate it like a native.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Level + trend + seasonality, and the humble baseline<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>The humble baseline: a moving average.</strong> "Next month = average of the last three months." Embarrassingly simple, surprisingly hard to beat. Any fancy model must out-predict this or it is theater. Always ask what the baseline was.</li>
+          <li><strong>Trend</strong> - the slow drift. Growing 2% a month? The forecast should lean up. Regression is the tool that finds this line.</li>
+          <li><strong>Seasonality</strong> - the repeating shape. November spikes, January slumps, Mondays differ from Saturdays. Miss it and every peak "surprises" you annually.</li>
+          <li><strong>Name-drop tier: ARIMA and Prophet.</strong> Your team's time-series tools - ARIMA is the classic statistician's engine, Prophet is Meta's business-friendly one. You will never touch either. Your job is to judge the output, not the math.</li>
+          <li><strong>MAPE - the honest scorecard.</strong> Mean absolute percentage error: on average, by what percent did the forecast miss? "Our demand forecast runs at 8% MAPE" is a sentence you can now use, benchmark, and put in a vendor contract.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Walmart forecasts demand store by store, item by item</strong> - feeding weather, holidays and local events (a home game near store 44 moves beer and pizza) into the models. The stakes are why they bother: a forecast that runs high becomes landfill and markdowns; one that runs low becomes empty shelves and customers who learned to shop elsewhere. Forecast error is not an abstraction - it is either waste or walkouts, and MAPE is how you watch it.</p>
+        </div>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          Never accept a forecast without two numbers attached: its MAPE on recent months, and the naive baseline's MAPE. The gap between them is what the modeling is actually worth.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: CLASSIFICATION ============ -->
+  <section class="section" id="classification">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · predicting labels</span>
+      <h2>Classification: predicting labels <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">Churn prediction is the canonical business classification problem - born in telecom (where contracts end monthly and switching is one phone call) and now standard kit in every SaaS and subscription business. The model reads each customer's history and outputs a score: how likely is this one to leave? What you do with the score is Part 3's real lesson.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Model ladder from logistic regression to gradient boosting with explainability falling and accuracy rising, plus a two by two confusion matrix with plain language labels">
+        <style>
+          .mlT { font: 700 13px Inter, sans-serif; fill: #FFFFFF; }
+          .mlS { font: 400 11px Inter, sans-serif; fill: #FFFFFF; opacity: .9; }
+          .mlH { font: 700 13.5px Inter, sans-serif; fill: #16232E; }
+          .mlX { font: 400 12px Inter, sans-serif; fill: #5E6E7A; }
+          .mlG { font: 600 12px Inter, sans-serif; fill: #BE123C; }
+          .mlW { font: 600 12px Inter, sans-serif; fill: #B42318; }
+          .mlK { font: 600 11.5px Inter, sans-serif; fill: #16232E; }
+          .mlA { stroke: #C3CFD8; stroke-width: 2.5; fill: none; marker-end: url(#mlAh); }
+        </style>
+        <defs>
+          <marker id="mlAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#C3CFD8" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <text class="mlW" x="40" y="30">explainability falls this way →</text>
+        <rect x="40" y="44" width="190" height="72" rx="11" fill="#0C3B5C"/>
+        <text class="mlT" x="54" y="68">Logistic regression</text>
+        <text class="mlS" x="54" y="86">each factor gets a weight -</text>
+        <text class="mlS" x="54" y="100">the auditable one</text>
+        <line class="mlA" x1="230" y1="80" x2="252" y2="80"/>
+        <rect x="256" y="44" width="190" height="72" rx="11" fill="#14699C"/>
+        <text class="mlT" x="270" y="68">Decision tree</text>
+        <text class="mlS" x="270" y="86">readable if-then rules a</text>
+        <text class="mlS" x="270" y="100">manager can argue with</text>
+        <line class="mlA" x1="446" y1="80" x2="468" y2="80"/>
+        <rect x="472" y="44" width="190" height="72" rx="11" fill="#2E9BD6"/>
+        <text class="mlT" x="486" y="68">Random forest</text>
+        <text class="mlS" x="486" y="86">many weak trees vote -</text>
+        <text class="mlS" x="486" y="100">wisdom of the crowd</text>
+        <line class="mlA" x1="662" y1="80" x2="684" y2="80"/>
+        <rect x="688" y="44" width="170" height="72" rx="11" fill="#2E9BD6"/>
+        <text class="mlT" x="702" y="68">Gradient boosting</text>
+        <text class="mlS" x="702" y="86">XGBoost · LightGBM -</text>
+        <text class="mlS" x="702" y="100">usually most accurate</text>
+        <text class="mlG" x="540" y="140">← accuracy typically rises this way</text>
+        <text class="mlH" x="40" y="176">The scorecard: one prediction, four outcomes</text>
+        <text class="mlK" x="212" y="204">Model says: will churn</text>
+        <text class="mlK" x="412" y="204">Model says: will stay</text>
+        <text class="mlK" x="40" y="238">Really churned</text>
+        <rect x="200" y="216" width="190" height="52" rx="9" fill="#0C3B5C"/>
+        <text class="mlT" x="212" y="238" style="font-size:12px">Caught ✓</text>
+        <text class="mlS" x="212" y="256">save call reaches a real risk</text>
+        <rect x="400" y="216" width="190" height="52" rx="9" fill="#B42318"/>
+        <text class="mlT" x="412" y="238" style="font-size:12px">Missed</text>
+        <text class="mlS" x="412" y="256">churner walks, nobody called</text>
+        <text class="mlK" x="40" y="298">Really stayed</text>
+        <rect x="200" y="276" width="190" height="52" rx="9" fill="#A5D8F3"/>
+        <text class="mlK" x="212" y="298">False alarm</text>
+        <text class="mlX" x="212" y="316" style="fill:#16232E">discount wasted on a stayer</text>
+        <rect x="400" y="276" width="190" height="52" rx="9" fill="#E3F2FC"/>
+        <text class="mlK" x="412" y="298">Correctly left alone</text>
+        <text class="mlX" x="412" y="316" style="fill:#16232E">no call needed, none made</text>
+        <text class="mlG" x="614" y="238">Precision: of those flagged,</text>
+        <text class="mlG" x="614" y="254">how many were real?</text>
+        <text class="mlG" x="614" y="288">Recall: of the real churners,</text>
+        <text class="mlG" x="614" y="304">how many did we catch?</text>
+        <text class="mlX" x="40" y="348">Every threshold trades the yellow cell against the red one. That trade is a budget decision - yours.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the model ladder and the four-cell scorecard behind every churn score</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The model ladder: explainability for accuracy<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Four names cover most of the classification your company will ever buy or build, arranged on one trade-off:</p>
+        <ul>
+          <li><strong>Logistic regression</strong> - gives each factor a weight ("month-to-month contract adds risk, tenure subtracts it"). The auditable one; regulators and lawyers love it. When explainability is the requirement, it wins.</li>
+          <li><strong>Decision tree</strong> - readable if-then rules ("IF tenure under 6 months AND support tickets over 3, THEN high risk"). A manager can read it and argue with it - which is a feature.</li>
+          <li><strong>Random forest and gradient boosting</strong> - ensembles: hundreds of weak trees that vote. XGBoost and LightGBM are the brand names you will hear. Usually the most accurate, least explainable - the model equivalent of "trust the committee".</li>
+        </ul>
+        <p>When someone proposes moving up the ladder, the question is not "is it more accurate?" (probably yes) but "what does the extra accuracy earn, and what does the lost explainability cost?" In a regulated decision, the answer often walks you back down.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The accuracy trap, and the two numbers that fix it<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Here is the trap that catches half of all ML buyers: <strong>with 5% monthly churn, a "model" that predicts "nobody churns" scores 95% accurate - and is perfectly useless.</strong> Accuracy lies whenever the thing you care about is rare. Hence the two honest numbers:</p>
+        <ul>
+          <li><strong>Precision</strong> - of the customers we flagged, how many really were churners? Low precision = a call list full of false alarms = wasted save offers.</li>
+          <li><strong>Recall</strong> - of the customers who really churned, how many did we catch? Low recall = churners walking out uncontacted.</li>
+        </ul>
+        <p>You cannot max both. Flag more people and recall rises while precision falls; flag fewer and the reverse. The dial between them is the threshold - and you will turn it yourself in Apply-along 2.</p>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Telco churn programs run on exactly this dial.</strong> The save desk can call maybe 500 customers a week, each call costing agent time plus a retention discount. Set the threshold low and agents burn the week soothing customers who were never leaving; set it high and real churners slip past. The winning telcos treat the call list as a precision/recall budget decision reviewed monthly - not a model decision made once by the data team.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 1 of 3</span>
+      <h2>Fit the forecast yourself <span class="tag demo">★ 9 min · everyone fits</span></h2>
+    </div>
+    <p class="lede">A year of monthly sales for one product line: holiday peak in Nov-Dec, winter dip after. Your job: beat the gut-feel forecast by tuning two sliders.</p>
+    <div class="widget" data-widget="forecast" data-config='{}'></div>
+    <div class="steps">
+      <div class="step"><p>Look at the actual line first. Say out loud what you see: how steep is the drift, and where does the seasonal bump sit?</p></div>
+      <div class="step"><p>Slide <strong>trend</strong> only. Watch the MAPE readout move - a straight line can only do so much against a seasonal shape.</p></div>
+      <div class="step"><p>Now add <strong>seasonality</strong>. Watch MAPE drop as the forecast learns the Nov-Dec rhythm.</p></div>
+      <div class="step"><p>Goal: get MAPE under 6%. When you do, stop - resist the urge to chase the last wiggles.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The debrief</strong>
+      You just did, by hand, what Prophet does automatically: decomposed a series into trend + seasonality. The leftover wiggle is noise - and chasing it is exactly the overfitting from Part 1. A forecast that "explains" every historical bump is the wiggly line wearing a suit.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 2 of 3</span>
+      <h2>Set the churn threshold yourself <span class="tag demo">★ 9 min · everyone decides</span></h2>
+    </div>
+    <p class="lede">The model has scored 20 customers from most to least at-risk. Red dots will actually churn (in this exercise you get to peek at the future). Where you draw the line decides who gets the save call.</p>
+    <div class="widget" data-widget="threshold" data-config='{}'></div>
+    <div class="steps">
+      <div class="step"><p>Slide the threshold LOW so nearly everyone gets flagged. You catch every churner - now count the save-offers wasted on customers who were staying anyway.</p></div>
+      <div class="step"><p>Slide it HIGH for a short, cheap call list. Precision looks great - now count the red dots to the right of your line: churners who walk uncontacted.</p></div>
+      <div class="step"><p>Find the threshold YOU would actually run, given that each save call costs a 20% discount. Defend it to your neighbor in one sentence.</p></div>
+      <div class="step"><p>Notice nobody in the room picked the same spot - and nobody is wrong. The right answer depends on margins and capacity, not on the model.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The debrief</strong>
+      The model gives scores. The BUSINESS chooses the threshold - by weighing the cost of a wasted discount against the cost of a lost customer. That decision is yours, not the data scientist's. If your team's threshold was never discussed in a business meeting, it was set by default, and defaults are rarely profitable.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 3 of 3</span>
+      <h2>Spec one prediction <span class="tag demo">★ 4 min · everyone specs</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><p>Pick ONE prediction your business would pay for: demand next month? churn next quarter? which deliveries run late?</p></div>
+      <div class="step"><p>Write the label definition precisely - what exactly counts as "churned" or "late", measured when? (Part 1's self-study card is your checklist.)</p></div>
+      <div class="step"><p>Name the history the model would learn from: which tables, how many months, and whether the labels in them are trustworthy.</p></div>
+      <div class="step"><p>Price the misses in both directions: what does a false alarm cost you, and what does a missed case cost? Those two numbers ARE your future threshold conversation.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>Why this matters</strong>
+      This half-page spec is what a good data scientist needs from you to start - and what a great one will refuse to start without. Bring it to your next data team conversation and watch the timeline shrink.
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">After the session</span>
+      <h2>This week <span class="tag exercise">◐ 25 min total</span></h2>
+    </div>
+    <ul>
+      <li><strong>Finish your prediction spec</strong> from Apply-along 3 with real numbers: label definition, data sources, cost of each miss direction.</li>
+      <li><strong>Ask your team one question</strong> about any model already running: "what are its precision and recall, and who chose the threshold?" Report the answer (or the silence) next session.</li>
+      <li><strong>Replay the forecast widget</strong> once - can you get under 6% MAPE in fewer moves, and can you say which slider earned each drop?</li>
+      <li><strong>Read the self-study card</strong> above: the data is the model - the churn-definition trap matters more than any algorithm choice you will ever face.</li>
+      <li><strong>Optional deep end:</strong> Provost &amp; Fawcett, <em>Data Science for Business</em>, chapters 4-5 - overfitting and evaluation, told for decision makers.</li>
+    </ul>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Your data scientist says the new churn model "overfits". What is she telling you?</p>
+      <button class="qopt" type="button">A · The model is too simple and needs more features added</button>
+      <button class="qopt" type="button">B · The model memorized the training history - like a student memorizing the textbook - and will fail the exam of new, unseen customers</button>
+      <button class="qopt" type="button">C · The model needs a bigger server to finish training</button>
+      <p class="qwhy">Overfitting is the wiggly line: perfect on history, useless on the future. The tell is a great training score paired with a mediocre score on held-out test data - always ask for the exam result, not the homework.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · A vendor's churn model is "95% accurate" and your churn rate is 5%. Why is the number worthless on its own?</p>
+      <button class="qopt" type="button">A · Predicting "nobody churns" also scores 95% accurate and catches zero churners - on rare events, ask for precision and recall instead</button>
+      <button class="qopt" type="button">B · 95% is below the industry standard of 99%</button>
+      <button class="qopt" type="button">C · Accuracy only applies to forecasting numbers, not labels</button>
+      <p class="qwhy">Accuracy lies whenever the target is rare. Precision (of those flagged, how many real?) and recall (of the real ones, how many caught?) are the two numbers that cannot hide behind a rare event.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">3 · Who should set the threshold that decides which scored customers get the save call - and on what basis?</p>
+      <button class="qopt" type="button">A · The data scientist, based on which threshold maximizes model accuracy</button>
+      <button class="qopt" type="button">B · Nobody - the algorithm optimizes it automatically during training</button>
+      <button class="qopt" type="button">C · The business, by weighing the cost of a wasted save offer against the cost of a lost customer</button>
+      <p class="qwhy">The model produces scores; the threshold converts scores into spending. It is a budget decision about precision versus recall, and it belongs in a business meeting - revisited as costs and capacity change.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Concepts covered &amp; their origins</h2>
+    </div>
+    <p class="lede">This session teaches the working 80% of each idea at executive intuition level - the math stays with your data team, the judgment stays with you.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Supervised learning + train/test split</span><span class="note">labeled history, the unseen exam - Part 1</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Overfitting</span><span class="note">one picture, one question to ask - Part 1 + forecast debrief</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Forecast decomposition + MAPE</span><span class="note">level, trend, seasonality, noise; the honest scorecard - Part 2 + Apply-along 1</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Model ladder: logistic / tree / forest / boosting</span><span class="note">explainability versus accuracy trade - Part 3</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Precision, recall &amp; the accuracy trap</span><span class="note">confusion-matrix literacy - Part 3 + Apply-along 2</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">ARIMA &amp; Prophet</span><span class="note">names only - your team's tools, your job is judging the MAPE</span></div>
+      <div class="covered-row"><span class="status pill light">✗</span><span class="name">Deep learning &amp; neural networks</span><span class="note">not covered by design - that is the future AI literacy course</span></div>
+    </div>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 6 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Supervised learning</b><span>Learn from labeled history, predict the next case. Numbers = regression (forecasts). Labels = classification (churn yes/no).</span></div>
+      <div class="cheat-item"><b>The overfitting test</b><span>"How does it score on data it has never seen?" Great training score + mediocre test score = memorized the textbook, will fail the exam.</span></div>
+      <div class="cheat-item"><b>Forecast anatomy</b><span>Level + trend + seasonality + accepted noise. Baseline = moving average; ARIMA and Prophet are the named engines. Judge by MAPE (average % miss).</span></div>
+      <div class="cheat-item"><b>The model ladder</b><span>Logistic regression (auditable weights) → decision tree (readable rules) → forest / boosting (XGBoost, LightGBM - accurate, opaque). Climb only when the accuracy pays for the opacity.</span></div>
+      <div class="cheat-item"><b>The accuracy trap</b><span>On 5% churn, "nobody churns" is 95% accurate. Demand precision (flagged → real?) and recall (real → caught?) instead.</span></div>
+      <div class="cheat-item"><b>The threshold is yours</b><span>Models give scores; the business sets the cut by pricing false alarms against missed churners. Never discussed = set by default = probably wrong.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 6 of 8 · learn-data-literacy-with-phoebe · by Phoebe Fu</span>
+    <span><a href="05-funnels-cohorts-rfm.html">← Funnels, cohorts and RFM</a> &nbsp;·&nbsp; <a href="../index.html">All sessions</a> &nbsp;·&nbsp; <a href="07-ml-basics-segment.html">Next: ML basics II: segment and understand →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=4"></script>
+<script src="../assets/widgets.js?v=4"></script>
+</body>
+</html>

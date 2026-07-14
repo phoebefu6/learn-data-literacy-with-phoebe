@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 3 · EDA and stats that do not lie - learn data literacy with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=4">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-data-literacy-with-phoebe</a> / Session 3 of 8</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Data Literacy with Phoebe · Session 3 of 8</div>
+    <h1>EDA and stats that do not lie: <span class="accent">interrogate a number before you trust it</span></h1>
+    <p class="sub">Averages that hide whales, charts chosen to flatter, correlations dressed up as causes, and a famous paradox where every group improves while the total gets worse. Today you learn the four or five statistical reflexes that protect million-dollar decisions - no formulas, just questions.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Core</span>
+      <span class="chip audience">Execs &amp; business leaders</span>
+      <span class="chip audience">Builds on Session 1</span>
+      <span class="chip time">45 min live + self-study</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:3">3-18 · Concepts</span>
+      <span class="a3" style="flex:5">18-40 · Apply-along</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this is the highest-stakes session</h2>
+    </div>
+    <p class="lede">Nobody lies to you with raw data - they lie to you with summaries. An average here, a truncated axis there, a "correlation" quietly promoted to a "cause", and a slide can steer a serious budget while being technically true and completely misleading. The defense is not a statistics degree; it is a short list of questions asked in the right order. Today: describe before you decide, interview the dataset before modeling it, and never confuse "moves together" with "causes".</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill amber">★ Apply-along - interactive, everyone plays</span>
+      <span class="pill inkpill">Real cases: Bing's $100M tweak, UC Berkeley 1973</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Four reflexes: the mean-or-median check (the fastest lie detector in business), the chart-choice mini-guide, the confounder question that deflates most "X causes Y" claims, and the A/B instinct - knowing that when the stakes are high, only an experiment settles causation.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: DESCRIBE BEFORE YOU DECIDE ============ -->
+  <section class="section" id="describe">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · the summary toolkit</span>
+      <h2>Describe before you decide <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Every dataset gets compressed before it reaches you: a center (mean, median, mode), a spread (range, percentiles, standard deviation), and a shape (the distribution). Each compression throws information away - the skill is knowing WHICH information just got thrown away, because that is where the surprises hide.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Left: two distributions with the same mean but different spread. Right: a skewed distribution where the mean is pulled away from the median">
+        <style>
+          .dsH { font: 700 13.5px Inter, sans-serif; fill: #16232E; }
+          .dsX { font: 400 12px Inter, sans-serif; fill: #5E6E7A; }
+          .dsN { font: 600 12px Inter, sans-serif; fill: #BE123C; }
+          .dsW { font: 600 12px Inter, sans-serif; fill: #B42318; }
+          .dsC1 { fill: none; stroke: #14699C; stroke-width: 3; }
+          .dsC2 { fill: none; stroke: #2E9BD6; stroke-width: 3; }
+          .dsSk { fill: #E3F2FC; stroke: #0C3B5C; stroke-width: 2.5; }
+          .dsM { stroke: #BE123C; stroke-width: 2; stroke-dasharray: 5 4; }
+          .dsR { stroke: #B42318; stroke-width: 2; stroke-dasharray: 5 4; }
+        </style>
+        <text class="dsH" x="40" y="30">Same mean, different story</text>
+        <line x1="40" y1="230" x2="400" y2="230" stroke="#C3CFD8" stroke-width="2"/>
+        <path class="dsC1" d="M 80 228 C 160 226, 190 60, 220 60 C 250 60, 280 226, 360 228"/>
+        <path class="dsC2" d="M 50 226 C 130 210, 170 150, 220 150 C 270 150, 310 210, 390 226"/>
+        <line class="dsM" x1="220" y1="55" x2="220" y2="230"/>
+        <text class="dsN" x="176" y="252">mean = 100 for BOTH</text>
+        <text class="dsX" x="232" y="86">tight: outcomes cluster, plan on it</text>
+        <text class="dsX" x="286" y="176">wide: same average,</text>
+        <text class="dsX" x="286" y="192">wild swings - risky</text>
+        <text class="dsH" x="500" y="30">Skewed: mean and median split</text>
+        <line x1="480" y1="230" x2="850" y2="230" stroke="#C3CFD8" stroke-width="2"/>
+        <path class="dsSk" d="M 490 228 C 510 100, 540 55, 575 55 C 640 55, 720 190, 840 226 L 840 228 Z"/>
+        <line class="dsM" x1="590" y1="60" x2="590" y2="230"/>
+        <line class="dsR" x1="680" y1="110" x2="680" y2="230"/>
+        <text class="dsN" x="520" y="252">median: the typical one</text>
+        <text class="dsW" x="692" y="252">mean: dragged by whales</text>
+        <text class="dsX" x="40" y="286">Spread in plain words: range = min to max · percentiles = "90% of orders ship within X days"</text>
+        <text class="dsX" x="40" y="304">· standard deviation = the usual distance from average. Small = consistent, large = volatile.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - why "the average is 100" is the beginning of a question, not the end</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Why "average" is the most dangerous word in business<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Mean</strong> adds everything and divides - democratic, but one whale drags it anywhere. <strong>Median</strong> is the middle customer - whales cannot move it. <strong>Mode</strong> is the most common value - the "typical basket" nobody computes but everyone imagines.</li>
+          <li><strong>Rule of thumb:</strong> money data (deal sizes, salaries, order values, customer spend) is almost always skewed by a few giants. For skewed data, the median tells the truth about "typical"; the mean tells the truth about "total divided by heads" - two different questions.</li>
+          <li><strong>Spread is strategy.</strong> Two products with the same average delivery time - one always 5 days, one ranging 1 to 20 - need completely different promises to customers. The average is identical; the business is not.</li>
+          <li><strong>Outliers are not dirt.</strong> Sometimes they are typos to remove; sometimes they are your next enterprise segment announcing itself. Ask which before anyone "cleans" them away.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>The US Census Bureau publishes household income both ways, and the gap is the lesson:</strong> mean household income runs roughly 40% higher than median, because a small number of very high earners drag the mean up. Report the mean and the country looks richer than the typical household actually is - which is exactly why economists, and sharp executives, reach for the median first on any money metric.</p>
+        </div>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          Whenever a slide says "average", ask: "what is the median?" If the presenter does not know, the summary was chosen for convenience, not truth. If the two numbers differ a lot, there is a whale in the data - and the whale is usually the interesting part.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Percentiles: the executive's favorite spread measure<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Standard deviation is fine, but percentiles speak human. "Median delivery is 3 days, 90th percentile is 11" means: half of customers get it in 3 days, but one in ten waits 11 or more - and that unlucky 10% writes your reviews. Tech companies run on this grammar (p50, p95, p99 response times) because averages hide exactly the customers who are angriest. When you set service targets, set them at a high percentile, not at the mean - the mean has never waited for a parcel.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: EDA ============ -->
+  <section class="section" id="eda">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · interview the dataset</span>
+      <h2>EDA: the walk around the building <span class="tag concept">4 min live</span></h2>
+    </div>
+    <p class="lede">Exploratory data analysis (EDA) is the discipline of interviewing a dataset before trusting it with a decision - profile it, question it, plot it, form hunches - BEFORE any model or metric gets built. John Tukey, the Bell Labs statistician who coined the practice in the 1970s, compared it to detective work: evidence first, verdict later.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The four moves of EDA (and the chart-choice mini-guide)<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Profile:</strong> how many rows? what date range? how much is missing? A churn analysis where 30% of customers have no signup date is a different project.</li>
+          <li><strong>Question:</strong> what would surprise me here? Write it down before looking - it keeps you honest when the data confirms what you hoped.</li>
+          <li><strong>Visualize:</strong> plot the distributions, not just the summaries. Shapes reveal what averages conceal - two humps, a whale tail, a cliff at a suspicious round number.</li>
+          <li><strong>Hypothesize:</strong> end EDA with sentences that start "it looks like..." - candidates for testing, not conclusions for slides.</li>
+        </ul>
+        <p>And when someone (including you) picks a chart, match it to the question:</p>
+        <table class="clean">
+          <thead><tr><th>Question</th><th>Right chart</th><th>Watch out for</th></tr></thead>
+          <tbody>
+            <tr><td>Compare categories</td><td>bar chart</td><td>truncated axes exaggerating small gaps</td></tr>
+            <tr><td>Trend over time</td><td>line chart</td><td>cherry-picked start dates</td></tr>
+            <tr><td>Shape of the data</td><td>histogram</td><td>bin sizes chosen to hide the whale</td></tr>
+            <tr><td>Relationship of two things</td><td>scatter plot</td><td>a trend line drawn through noise</td></tr>
+            <tr><td>Share of a whole</td><td>bar, NOT pie if over 4 slices</td><td>humans cannot compare pie angles</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          Ask "can I see the distribution?" once per readout. Analysts light up (someone finally asked), and you will occasionally watch an "average customer" dissolve into two totally different segments in front of the room.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Anscombe's quartet: same stats, four different truths<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>In 1973 statistician Francis Anscombe built four small datasets with essentially identical summary statistics - same means, same variances, same correlation, same trend line. Then he plotted them: one is a clean linear relationship, one is a curve, one is a straight line bent by a single outlier, and one is a vertical stack where a lone point invents the entire "relationship". Four identical spreadsheets of summary stats, four wildly different realities. It is the most elegant argument ever made for one habit: <strong>always plot the data.</strong> Any analysis you are shown that contains only summary numbers and zero pictures has skipped the step Anscombe built his quartet to defend.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: CORRELATION, CAUSATION, PARADOX ============ -->
+  <section class="section" id="causation">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · the expensive confusion</span>
+      <h2>Correlation, causation and the paradox <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">Ice cream sales and drownings rise together every year. Ice cream does not drown anyone - summer causes both. "Moves together" is cheap to find and easy to sell; "causes" is expensive to prove and is the only thing worth acting on. Between the two sits the confounder: the hidden third factor pulling both strings.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Simpson's paradox: two groups each trend upward but the combined trend line slopes downward">
+        <style>
+          .sxH { font: 700 13.5px Inter, sans-serif; fill: #16232E; }
+          .sxX { font: 400 12px Inter, sans-serif; fill: #5E6E7A; }
+          .sxN { font: 600 12px Inter, sans-serif; fill: #BE123C; }
+          .sxW { font: 600 12.5px Inter, sans-serif; fill: #B42318; }
+          .sxL1 { stroke: #14699C; stroke-width: 3; }
+          .sxL2 { stroke: #2E9BD6; stroke-width: 3; }
+          .sxLC { stroke: #B42318; stroke-width: 2.5; stroke-dasharray: 7 5; }
+          .sxD1 { fill: #14699C; }
+          .sxD2 { fill: #2E9BD6; }
+        </style>
+        <text class="sxH" x="40" y="30">Simpson's paradox: every group improves, the total "declines"</text>
+        <line x1="60" y1="270" x2="560" y2="270" stroke="#C3CFD8" stroke-width="2"/>
+        <line x1="60" y1="270" x2="60" y2="50" stroke="#C3CFD8" stroke-width="2"/>
+        <circle class="sxD1" cx="110" cy="130" r="6"/>
+        <circle class="sxD1" cx="145" cy="118" r="6"/>
+        <circle class="sxD1" cx="180" cy="102" r="6"/>
+        <circle class="sxD1" cx="215" cy="92" r="6"/>
+        <circle class="sxD1" cx="250" cy="78" r="6"/>
+        <line class="sxL1" x1="100" y1="138" x2="262" y2="72"/>
+        <circle class="sxD2" cx="330" cy="238" r="6"/>
+        <circle class="sxD2" cx="365" cy="226" r="6"/>
+        <circle class="sxD2" cx="400" cy="212" r="6"/>
+        <circle class="sxD2" cx="435" cy="200" r="6"/>
+        <circle class="sxD2" cx="470" cy="188" r="6"/>
+        <line class="sxL2" x1="320" y1="246" x2="482" y2="180"/>
+        <line class="sxLC" x1="100" y1="110" x2="490" y2="228"/>
+        <text class="sxN" x="106" y="62">Group A: clearly up</text>
+        <text class="sxN" x="366" y="288">Group B: clearly up</text>
+        <text class="sxW" x="300" y="130">blended line: "down"</text>
+        <text class="sxH" x="600" y="70">Why it happens</text>
+        <text class="sxX" x="600" y="96">The groups sit at different levels</text>
+        <text class="sxX" x="600" y="114">and have different sizes. Mix them</text>
+        <text class="sxX" x="600" y="132">and the MIX, not the trend,</text>
+        <text class="sxX" x="600" y="150">dominates the blended number.</text>
+        <text class="sxN" x="600" y="184">The defense: always ask</text>
+        <text class="sxN" x="600" y="202">"does this hold inside each</text>
+        <text class="sxN" x="600" y="220">segment?" before acting on</text>
+        <text class="sxN" x="600" y="238">any blended average.</text>
+        <text class="sxX" x="40" y="316">Aggregates can reverse group-level truth. Berkeley 1973 made this paradox famous - story below.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - two rising groups, one falling blend: the mix did it</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Confounders, the Berkeley case, and the A/B instinct<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>The confounder question:</strong> for any "X drives Y" claim, ask "what third thing could drive both?" Summer drives ice cream AND drownings. Company size drives tool adoption AND revenue. It deflates half of all correlation claims in one sentence.</li>
+          <li><strong>Simpson's paradox is the confounder's masterpiece:</strong> a trend that holds in every group can reverse when the groups are blended, because the group mix is doing the driving.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>UC Berkeley, 1973:</strong> graduate admissions looked biased - 44% of men admitted vs 35% of women, and the university faced a lawsuit. Statisticians broke it down BY DEPARTMENT and the picture reversed: in most departments women were admitted at equal or higher rates. The confounder: which departments people applied to. Women disproportionately applied to fiercely competitive departments with low admission rates for everyone; men flocked to high-admission ones. The blended number was arithmetically true and directionally wrong - the canonical warning taped above every dashboard of blended averages.</p>
+        </div>
+        <ul>
+          <li><strong>So how do you ever PROVE causation?</strong> Run an experiment. Split customers randomly, change one thing for one group, compare. Randomization silently cancels every confounder - known and unknown - which is why A/B testing is the only clean causal instrument business has.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Bing's $100M title tweak:</strong> Ronny Kohavi's experimentation team at Microsoft tested a tiny change to how ad titles displayed - an idea that had sat in the backlog for months because nobody expected much. The A/B test revealed it was worth roughly $100M a year in revenue. The honest twin of the story: Kohavi reports that most tested ideas fail to move their target metric - at Bing, about two-thirds. Experts cannot tell the $100M ideas from the duds by intuition. That is not an argument against experts; it is the argument FOR testing.</p>
+        </div>
+        <div class="callout tip">
+          <strong>The exec move</strong>
+          Calibrate the tool to the stakes: for small decisions, correlation plus judgment is fine. For big irreversible ones, ask "can we test this on 5% of customers first?" If the answer is "no time", you are choosing speed over knowing - sometimes right, but choose it knowingly.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Sampling: who is missing from this data?<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Every dataset is a sample of some reality, and the fastest way to lie without lying is to sample the convenient. Survey respondents are people who answer surveys. Churned customers do not fill in exit polls. The classic: in WWII, analysts mapped bullet holes on returning bombers to decide where to add armor - until statistician Abraham Wald pointed out the holes marked where planes could be hit AND STILL COME HOME. Armor the clean spots: the fatal hits are on the planes you never see. Before trusting any dataset, ask the Wald question: <strong>"who is not in this data, and why?"</strong></p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 1 of 3</span>
+      <h2>Why the average lies <span class="tag demo">★ 7 min · everyone plays</span></h2>
+    </div>
+    <p class="lede">Ten ordinary orders, humming along. Then sales closes one enterprise whale. Watch what happens to each summary number - and decide which one belongs in the board pack.</p>
+    <div class="widget" data-widget="meanmedian" data-config='{"title": "★ Why the average lies - add one whale client", "unit": "$", "values": [62, 74, 81, 88, 95, 102, 110, 118, 126, 140], "add": {"label": "Add the whale client", "value": 1800}}'></div>
+    <div class="steps">
+      <div class="step"><p>Before clicking: predict. The whale is worth $1,800 against orders around $100. How far will the mean jump? Will the median move at all? Say your guesses out loud.</p></div>
+      <div class="step"><p>Click "Add the whale client". Check your predictions - most people underestimate the mean's jump and overestimate the median's.</p></div>
+      <div class="step"><p>Debate: which number goes in the board pack as "typical order value"? The honest answer is usually the median, PLUS the whale reported separately by name - never the blended mean pretending the whale is ten normal customers.</p></div>
+      <div class="step"><p>Translate to your own business: name your whale metric - the one number you report where a few giants drag the average. Deal size? Order value? Time-to-close?</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 2 of 3</span>
+      <h2>Stat-proof one slide <span class="tag demo">★ 8 min · everyone audits</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><p>Pick a real claim from a slide you saw recently: "satisfaction is up", "the campaign worked", "churn improved". Write it verbatim.</p></div>
+      <div class="step"><p>Run the four challenge questions: <strong>Versus what baseline?</strong> (up from when, compared to what?) <strong>Mean or median?</strong> (and would the other tell a different story?) <strong>How many data points?</strong> (12 survey responses is an anecdote wearing a chart) <strong>Could a confounder explain it?</strong> (seasonality, a price change, one big customer?)</p></div>
+      <div class="step"><p>Rewrite the claim honestly. "Satisfaction up" often becomes "median satisfaction flat; mean lifted by 3 enthusiastic enterprise accounts; n=41". Less triumphant, infinitely more useful.</p></div>
+      <div class="step"><p>Share the best before/after rewrite with the room. The gap between the two versions is exactly what this session is for.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>The exec move</strong>
+      Institutionalize the four questions: put "baseline / center / n / confounder" in your team's slide template footer. Claims that survive all four are the ones worth budget.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Apply-along 3 of 3</span>
+      <h2>The correlation courtroom <span class="tag demo">★ 6 min · everyone votes</span></h2>
+    </div>
+    <p class="lede">Four claims, straight from the wild. For each: the room votes causal or not-proven, then names the most plausible confounder. No claim leaves without a suspect.</p>
+    <div class="steps">
+      <div class="step"><p><strong>Claim 1: "Users of feature X churn less - X reduces churn."</strong> Vote, then find the confounder. (Engaged power users both adopt features AND stay. Does X retain them, or do the retained use X?)</p></div>
+      <div class="step"><p><strong>Claim 2: "Stores with more staff sell more - hire more staff."</strong> Vote, confounder. (Busy high-traffic locations get more staff AND more sales. Traffic drives both.)</p></div>
+      <div class="step"><p><strong>Claim 3: "Customers who contact support churn more - reduce support contact."</strong> Vote, confounder. (Product problems drive both the ticket and the churn. Muzzling support hides the smoke, not the fire.)</p></div>
+      <div class="step"><p><strong>Claim 4: "Trial users who invite a colleague convert 3x more - prompt invites harder."</strong> Vote, confounder - then discuss: this is exactly the kind of claim worth an A/B test, because if it IS causal, it is a growth lever.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">After the session</span>
+      <h2>This week <span class="tag exercise">◐ 25 min total</span></h2>
+    </div>
+    <ul>
+      <li><strong>Ask "what is the median?"</strong> once in a real meeting where an average is presented. Note the reaction - and whether the answer changes the decision.</li>
+      <li><strong>Finish your stat-proofed slide</strong> from Apply-along 2 and send the rewrite to its original author, kindly. You will make one ally and one enemy; both are progress.</li>
+      <li><strong>Read the self-study cards:</strong> percentiles, Anscombe's quartet, and the Wald sampling story.</li>
+      <li><strong>Optional deep end:</strong> Kohavi, Tang &amp; Xu, <em>Trustworthy Online Controlled Experiments</em>, chapter 1 - the best executive briefing on experimentation ever printed.</li>
+    </ul>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · You are reporting "typical customer spend" and the data contains a few giant enterprise accounts. Which center do you reach for?</p>
+      <button class="qopt" type="button">A · The mean - it uses every data point, so it is the most accurate</button>
+      <button class="qopt" type="button">B · The median - whales cannot drag it, so it describes the typical customer; report the whales separately</button>
+      <button class="qopt" type="button">C · Whichever is higher - it makes the business look stronger</button>
+      <p class="qwhy">Money data is almost always whale-skewed. The median answers "what is typical"; the mean answers "total divided by heads" - a different question. Blend the whale into the mean and you describe a customer who does not exist.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · Simpson's paradox means...</p>
+      <button class="qopt" type="button">A · Small samples always contradict large ones</button>
+      <button class="qopt" type="button">B · Correlation gets stronger when datasets are combined</button>
+      <button class="qopt" type="button">C · A trend that holds inside every group can reverse when the groups are blended, because the group mix drives the total</button>
+      <p class="qwhy">Berkeley 1973: most departments admitted women at equal or higher rates, yet the blended total looked biased against them - the mix of departments applied to, not the departments themselves, produced the aggregate. Always ask "does this hold inside each segment?"</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · What can a well-run A/B experiment tell you that no amount of historical correlation analysis can?</p>
+      <button class="qopt" type="button">A · Whether the change CAUSED the outcome - randomization cancels confounders, known and unknown</button>
+      <button class="qopt" type="button">B · Which customers are most profitable</button>
+      <button class="qopt" type="button">C · Whether the metric was calculated correctly</button>
+      <p class="qwhy">History can only show what moved together; a lurking third factor can always explain it. Random assignment breaks every such backdoor at once - which is why Bing tested its way to a $100M title change that intuition had shelved for months.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Concepts covered &amp; their origins</h2>
+    </div>
+    <p class="lede">The working 80% of each idea, credited to its canon - depth on demand for the curious.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Descriptive statistics</span><span class="note">mean / median / mode, spread, percentiles, outliers - Part 1 + Apply-along 1</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">EDA (Tukey, 1977)</span><span class="note">profile, question, visualize, hypothesize + chart-choice guide - Part 2</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Correlation vs causation</span><span class="note">confounders, the ice-cream test - Part 3 + Apply-along 3</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Simpson's paradox</span><span class="note">UC Berkeley 1973 case + the segment question - Part 3</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">A/B testing intuition (Kohavi)</span><span class="note">randomization as the causal instrument, Bing $100M - Part 3</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Statistical significance</span><span class="note">pointer only - p-values and power stay with your analysts; you supply the sharp question</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Anscombe's quartet (1973)</span><span class="note">self-study card - the eternal argument for plotting the data</span></div>
+    </div>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 3 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Mean vs median</b><span>Money data is whale-skewed: median = typical, mean = total per head. Big gap between them = a whale worth meeting. Always ask for both.</span></div>
+      <div class="cheat-item"><b>Spread is strategy</b><span>Same average, different spread = different business. Percentiles speak human: "90% within X" - set promises at high percentiles, not means.</span></div>
+      <div class="cheat-item"><b>Chart-choice guide</b><span>Compare → bar · trend → line · shape → histogram · relationship → scatter · share → not pie beyond 4 slices. And always plot (Anscombe).</span></div>
+      <div class="cheat-item"><b>The confounder question</b><span>For every "X drives Y": what third thing could drive both? Summer sells ice cream and drowns swimmers. One question, half the claims gone.</span></div>
+      <div class="cheat-item"><b>Simpson's paradox</b><span>Trends can reverse when groups blend - Berkeley 1973. Before acting on any blended average, ask: does it hold inside each segment?</span></div>
+      <div class="cheat-item"><b>The A/B instinct</b><span>Only randomized experiments prove causation. High-stakes claim? "Can we test on 5% first?" And remember: most tested ideas fail - that is the point.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 3 of 8 · learn-data-literacy-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="02-where-data-lives.html">← Prev: Where data lives</a> &nbsp;·&nbsp; <a href="04-metrics-and-kpi-trees.html">Next: Metrics and KPI trees →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=4"></script>
+<script src="../assets/widgets.js?v=4"></script>
+</body>
+</html>
