@@ -51,6 +51,17 @@
   .isnot .half p { font-size: .87rem; color: var(--muted); }
   .isnot .is h3 { color: var(--indigo-deep); }
   .isnot .not h3 { color: var(--muted); }
+
+  .mm-section { margin-top: 1.6rem; }
+  .mm-section h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .2rem; }
+  .mm-section .mm-lede { color: var(--muted); font-size: .92rem; margin-bottom: .4rem; }
+  .mm-wrap { border: 1px solid var(--hairline); border-radius: var(--radius); background: linear-gradient(180deg,#fff, #F6FAFD); padding: .6rem; overflow-x: auto; }
+  .mm-svg { width: 100%; height: auto; display: block; max-width: 60rem; margin: 0 auto; min-width: 34rem; }
+  .mm-link { cursor: pointer; text-decoration: none; }
+  .mm-node rect { transition: opacity .15s ease, filter .15s ease; }
+  .mm-node text { pointer-events: none; }
+  .mm-link:hover .mm-node rect { filter: brightness(1.06); }
+  .mm-edge { transition: opacity .15s ease; }
 </style>
 </head>
 <body>
@@ -70,6 +81,12 @@
 </header>
 
 <main class="wrap">
+  <section class="section mm-section">
+    <h2>The knowledge map 🧠</h2>
+    <p class="mm-lede">The whole course at a glance - hover a session to spotlight its concepts, click any node to jump in.</p>
+    <div class="mm-wrap"><div id="mindmap"></div></div>
+  </section>
+
   <section class="section">
     <div class="course-grid">
       <a class="course-card" href="courses/01-think-in-data.html" style="--diff:#34D399">
@@ -183,6 +200,55 @@
   </footer>
 </main>
 
+<script>
+window.MINDMAP_DATA = {
+  title: "Data\nLiteracy",
+  centerColor: "#0C3B5C",
+  sessions: [
+    { label: "Think in\ndata", href: "courses/01-think-in-data.html", color: "#34D399",
+      concepts: [
+        { label: "Data types", href: "courses/01-think-in-data.html" },
+        { label: "Data ladder", href: "courses/01-think-in-data.html" },
+        { label: "Lifecycle", href: "courses/01-think-in-data.html" } ] },
+    { label: "Where data\nlives", href: "courses/02-where-data-lives.html", color: "#34D399",
+      concepts: [
+        { label: "OLTP vs OLAP", href: "courses/02-where-data-lives.html" },
+        { label: "Warehouse & lake", href: "courses/02-where-data-lives.html" },
+        { label: "ETL vs ELT", href: "courses/02-where-data-lives.html" } ] },
+    { label: "EDA &\nstats", href: "courses/03-eda-and-stats.html", color: "#FBBF24",
+      concepts: [
+        { label: "Summary stats", href: "courses/03-eda-and-stats.html" },
+        { label: "Distributions", href: "courses/03-eda-and-stats.html" },
+        { label: "Correlation", href: "courses/03-eda-and-stats.html" } ] },
+    { label: "Metrics &\nKPI trees", href: "courses/04-metrics-and-kpi-trees.html", color: "#FBBF24",
+      concepts: [
+        { label: "North Star", href: "courses/04-metrics-and-kpi-trees.html" },
+        { label: "KPI trees", href: "courses/04-metrics-and-kpi-trees.html" },
+        { label: "Vanity metrics", href: "courses/04-metrics-and-kpi-trees.html" } ] },
+    { label: "Funnels,\ncohorts, RFM", href: "courses/05-funnels-cohorts-rfm.html", color: "#FBBF24",
+      concepts: [
+        { label: "Funnels", href: "courses/05-funnels-cohorts-rfm.html" },
+        { label: "Cohorts", href: "courses/05-funnels-cohorts-rfm.html" },
+        { label: "RFM segments", href: "courses/05-funnels-cohorts-rfm.html" } ] },
+    { label: "ML I:\npredict", href: "courses/06-ml-basics-predict.html", color: "#FB923C",
+      concepts: [
+        { label: "Supervised ML", href: "courses/06-ml-basics-predict.html" },
+        { label: "Forecasting", href: "courses/06-ml-basics-predict.html" },
+        { label: "Classification", href: "courses/06-ml-basics-predict.html" } ] },
+    { label: "ML II:\nsegment", href: "courses/07-ml-basics-segment.html", color: "#FB923C",
+      concepts: [
+        { label: "Clustering", href: "courses/07-ml-basics-segment.html" },
+        { label: "Sentiment", href: "courses/07-ml-basics-segment.html" },
+        { label: "CLV", href: "courses/07-ml-basics-segment.html" } ] },
+    { label: "Dashboard\nto decision", href: "courses/08-dashboard-to-decision.html", color: "#F87171",
+      concepts: [
+        { label: "KPI diagnosis", href: "courses/08-dashboard-to-decision.html" },
+        { label: "Tool per branch", href: "courses/08-dashboard-to-decision.html" },
+        { label: "Action memo", href: "courses/08-dashboard-to-decision.html" } ] }
+  ]
+};
+</script>
+<script src="assets/mindmap.js?v=1"></script>
 <script src="assets/app.js?v=4"></script>
 </body>
 </html>
