@@ -1,3 +1,8 @@
+<!-- learn-with-phoebe hub banner -->
+> ### 📚 Part of [**Learn with Phoebe**](https://phoebefu6.github.io/learn-with-phoebe/)
+> The shelf of 20 free, hands-on courses on AI, data, and the craft around them. **[Browse every course ↗](https://phoebefu6.github.io/learn-with-phoebe/)**
+<!-- /learn-with-phoebe hub banner -->
+
 # learn-data-literacy-with-phoebe
 
 Data literacy for business stakeholders and executives - from numbers to decisions. Eight 45-minute sessions that teach decision-makers what to ask, when to trust, and how to act on data: metrics and KPI trees, funnels, cohorts and RFM, forecasting and churn intuition, and the insight-to-action memo. Every session anchors on a real company case (Moneyball, Amazon, Netflix, Tesco, Bing) and an in-page interactive simulator - sliders, not syntax. No code anywhere.
