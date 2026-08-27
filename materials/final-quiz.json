@@ -1,0 +1,176 @@
+{
+  "slug": "learn-data-literacy-with-phoebe",
+  "title": "Data Literacy",
+  "version": 1,
+  "passPercent": 80,
+  "purposeNote": "This quiz records your name, work email and score so attendance and completion can be confirmed. Scores are kept for 12 months, then aggregated with identifiers removed. Visible to Phoebe Fu and named course admins only.",
+  "tracks": {
+    "single": {
+      "label": "Executive track",
+      "formId": "",
+      "formUrl": "",
+      "questions": [
+        {
+          "n": 1,
+          "session": "01",
+          "term": "the ladder",
+          "type": "mcq",
+          "q": "\"Cart abandonment was 71 percent last month.\" Where does that statement sit on the data ladder?",
+          "options": [
+            "Data, because it came straight from the tracking system",
+            "Information, summarized and true, but it does not yet change what anyone believes or does",
+            "Insight, because 71 percent is alarmingly high",
+            "Decision, because it tells the team what to fix"
+          ],
+          "answer": 1,
+          "points": 1,
+          "why": "Aggregation turns data into information. It becomes insight only when a comparison adds a because or a which-means, and a decision only when someone commits to an action and a budget."
+        },
+        {
+          "n": 2,
+          "session": "01",
+          "term": "analytics lifecycle",
+          "type": "mcq",
+          "q": "An analyst quotes three weeks for a churn study and you are surprised. Where does most of that time actually go?",
+          "options": [
+            "Cleaning and preparing the data, typically 60 to 80 percent of any analytics project",
+            "Running the statistical models",
+            "Building the slides and the narrative",
+            "Waiting for stakeholder sign-off on the question"
+          ],
+          "answer": 0,
+          "points": 1,
+          "why": "Joining, deduplicating and fixing data dwarfs the analysis itself. A leader who expects this funds the plumbing instead of treating it as a delay."
+        },
+        {
+          "n": 3,
+          "session": "02",
+          "term": "OLTP vs OLAP",
+          "type": "mcq",
+          "q": "Why should a five-year revenue report never run directly on the checkout database?",
+          "options": [
+            "The checkout database deletes history after 30 days",
+            "Finance data is too sensitive to sit in an application database",
+            "Large analytical scans compete with live transactions on an engine tuned for milliseconds, so customers at checkout pay the price",
+            "Reporting tools cannot connect to transactional databases"
+          ],
+          "answer": 2,
+          "points": 1,
+          "why": "Transactional engines are built for single records in milliseconds. A five-year scan is a freight job on a race track, and on a peak day the checkout slows or fails."
+        },
+        {
+          "n": 4,
+          "session": "03",
+          "term": "mean vs median",
+          "type": "mcq",
+          "q": "You are reporting typical customer spend and a few very large enterprise accounts sit in the data. Which measure do you ask for?",
+          "options": [
+            "The mean, because it uses every data point",
+            "The median, because large accounts cannot drag it, with those accounts reported separately",
+            "Whichever is higher, since it presents the business more favourably",
+            "The mode, because it shows the most common purchase"
+          ],
+          "answer": 1,
+          "points": 1,
+          "why": "Money data is almost always skewed by a few large accounts. The median answers what is typical. The mean answers total divided by heads, which is a different question and a different decision."
+        },
+        {
+          "n": 5,
+          "session": "03",
+          "term": "Simpson's paradox",
+          "type": "mcq",
+          "q": "What does Simpson's paradox describe?",
+          "options": [
+            "Small samples reliably contradict large ones",
+            "Correlation strengthens whenever datasets are combined",
+            "A trend that holds inside every group can reverse when the groups are blended, because the group mix drives the total",
+            "Two metrics that always move in opposite directions"
+          ],
+          "answer": 2,
+          "points": 1,
+          "why": "Berkeley 1973: most departments admitted women at equal or higher rates, yet the blended total looked biased. The mix, not the behaviour, produced the reversal. Always ask to see the split."
+        },
+        {
+          "n": 6,
+          "session": "04",
+          "term": "Goodhart's law",
+          "type": "mcq",
+          "q": "What does Goodhart's law warn a leader about?",
+          "options": [
+            "Any metric improves once it is visible on a dashboard",
+            "When a measure becomes a target it stops being a good measure, because people optimize the number rather than the goal behind it",
+            "Numeric targets should never be set for teams",
+            "Metrics lose accuracy as the business grows"
+          ],
+          "answer": 1,
+          "points": 1,
+          "why": "Targets are fine. Naked targets are not. Wells Fargo's eight-accounts-per-customer target produced millions of fake accounts. Pair every target with a guardrail metric that catches the cheat."
+        },
+        {
+          "n": 7,
+          "session": "05",
+          "term": "cohorts beat averages",
+          "type": "mcq",
+          "q": "Active users grew 20 percent this quarter and the CMO concludes retention is healthy. What is the data-literate response?",
+          "options": [
+            "Agreed, since users cannot grow while retention falls",
+            "Not necessarily, because averages blend new and old users and fast acquisition can mask older cohorts bleeding out. Ask to see it by cohort.",
+            "It depends entirely on whether revenue also grew 20 percent",
+            "Agreed, provided the growth came from organic rather than paid channels"
+          ],
+          "answer": 1,
+          "points": 1,
+          "why": "Total actives can climb for quarters while every individual cohort decays toward zero, because the leaky bucket is being refilled faster than it drains. Only a cohort view separates the two."
+        },
+        {
+          "n": 8,
+          "session": "06",
+          "term": "precision and recall",
+          "type": "mcq",
+          "q": "A vendor's churn model is 95 percent accurate and your churn rate is 5 percent. Why is that number worthless on its own?",
+          "options": [
+            "95 percent is below the industry standard of 99 percent",
+            "Predicting that nobody churns also scores 95 percent and catches zero churners, so ask for precision and recall instead",
+            "Accuracy applies only to forecasting numbers, not labels",
+            "The model was probably trained on the vendor's data rather than yours"
+          ],
+          "answer": 1,
+          "points": 1,
+          "why": "Accuracy lies whenever the target is rare. Precision asks how many of those flagged were real. Recall asks how many of the real ones were caught. Those two are what the save budget actually depends on."
+        },
+        {
+          "n": 9,
+          "session": "07",
+          "term": "CLV to CAC",
+          "type": "mcq",
+          "q": "Your CLV to CAC ratio comes back at 0.8. What is that telling you?",
+          "options": [
+            "Healthy, because anything under 1 means acquisition is efficient",
+            "Every new customer costs more to acquire than they will ever return in lifetime profit, so growth is burning money",
+            "Nothing yet, since the ratio only becomes meaningful above 5",
+            "Acquisition is fine, but retention needs work"
+          ],
+          "answer": 1,
+          "points": 1,
+          "why": "Below 1, each acquired customer is a small loss that the marketing budget then scales up. Roughly 3 is the healthy rule of thumb, and far above it usually signals underinvestment in growth."
+        },
+        {
+          "n": 10,
+          "session": "08",
+          "term": "diagnosis routine",
+          "type": "mcq",
+          "q": "Monday's dashboard shows income down 40 percent. What is your first move?",
+          "options": [
+            "Call the CMO, since revenue problems belong to marketing",
+            "Walk the KPI tree to find which branches moved, before deciding who to call",
+            "Announce an immediate cost freeze to protect the bottom line",
+            "Ask for a deeper analysis and revisit it next week"
+          ],
+          "answer": 1,
+          "points": 1,
+          "why": "Walk the tree, not the org chart. The arithmetic isolates the branch that actually moved, which often has nothing to do with the function you would have called first."
+        }
+      ]
+    }
+  }
+}
