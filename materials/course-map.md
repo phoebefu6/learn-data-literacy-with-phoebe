@@ -45,3 +45,31 @@ Provost & Fawcett *Data Science for Business* · Croll & Yoskovitz *Lean Analyti
 ## Not covered by design
 
 Deep learning, neural networks, embeddings, recommendations, search ranking, GenAI/LLMs (future learn-ai-literacy course) · SQL/Python syntax (this is literacy, not tooling) · statistics math proofs · MLOps/deployment · data privacy law depth (one guardrail card only)
+
+---
+
+## Correction log
+
+**2026-09-21 - the Berkeley lawsuit claim removed from session 3.**
+
+Session 3's "Real world" callout stated that UC Berkeley "faced a lawsuit" over its 1973
+graduate admissions figures. **No lawsuit was ever filed.** The graduate division feared being
+sued and commissioned the analysis pre-emptively; the lawsuit version is a documented urban
+legend traced through a great many textbooks and papers. The correction comes from a statistics
+author's investigation citing an interview with one of the original paper's own authors.
+
+The same callout, and the Simpson's paradox quiz explanation, also flattened the finding to "in
+most departments women were admitted at equal or higher rates". The published analysis found
+**four departments significantly biased against women and six significantly biased against men**,
+with the pooled figure showing a small bias in favour of women. Both passages now say that.
+
+The admissions figures themselves (44% of men, 35% of women) are **secondary tier**: the 1975
+paper would not load when this was checked, so they come from three independent sources that
+reproduce its tables and agree to the digit. That limitation is now stated on the page.
+
+Found while building `learn-product-thinking-with-phoebe` and
+`learn-data-thinking-with-phoebe`, whose session 6 teaches this correction explicitly. Before
+the fix, two live courses contradicted each other on the same case.
+
+**The generalisable rule this produced:** when a course corrects a famous claim, grep the whole
+estate for that claim before publishing. The uncorrected version has usually already shipped.
